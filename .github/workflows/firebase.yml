@@ -1,9 +1,9 @@
-name: Deploy to Firebase
+name: Deploy to GitHub Pages and Firebase
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -23,6 +23,12 @@ jobs:
 
       - name: Build
         run: ng build --prod
+
+      - name: Deploy to GitHub Pages
+        run: |
+          npx angular-cli-ghpages --dir=dist/hm-ui/browser
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Firebase
         run: |
