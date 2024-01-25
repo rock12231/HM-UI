@@ -3,7 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "public",
+    "public": "dist/hm-ui/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
