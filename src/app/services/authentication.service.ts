@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -8,32 +9,53 @@ import { Observable } from 'rxjs';
 export class AuthenticationService {
   // for local development environment set apiUrl to 'http://localhost:8000/api'
 
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'http://localhost:8000/api/user';
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,) { }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/token/`, { username, password });
   }
 
-  setToken(access: string,refresh:string): void {
-    localStorage.setItem('token', access);
-    localStorage.setItem('refresh', refresh);
+  setToken(access: string, refresh: string): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('token', access);
+      localStorage.setItem('refresh', refresh);
+    }
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getToken(): string | null | undefined {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('token');
+    }
+    return undefined;
   }
 
   clearToken(): void {
-    localStorage.removeItem('token');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+    }
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    console.log("Token : >>>>>", token);
+    return token ? this.jwtHelper.isTokenExpired(token) : true;
   }
 
   isAuthenticated(): boolean {
-    this.http.get(`${this.apiUrl}/token/verify/`, {headers: this.createHeaders()}).subscribe(data => {
-        console.log(data);
-      });
-    return !!this.getToken();
+    // check status of data is 200 or not
+    this.http.get(`${this.apiUrl}/token/verify/`, { headers: this.createHeaders() }).subscribe(data => {
+      console.log(data);
+    });
+    if (this.isTokenExpired()) {
+      return false;
+    }
+    else {
+      return true;
+    }
+    // return !!this.getToken();
   }
 
   createHeaders(): HttpHeaders {
@@ -42,7 +64,14 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refresh');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refresh');
+    }
   }
+
+  register(username: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register/`, { username, password });
+  }
+
 }
