@@ -74,4 +74,8 @@ export class AuthenticationService {
     return this.http.post<any>(`${this.apiUrl}/register/`, { username, password });
   }
 
+  getGithubId(gid: string): Observable<any> {
+    return this.http.get<any>(`https://api.github.com/users/${gid}`);
+  }
+
 }
