@@ -36,7 +36,7 @@ export class LoginComponent {
       (response) => {
         console.log(response);
         this.authService.setToken(response.access, response.refresh);
-        this.router.navigate(['/']);
+        this.router.navigate(['/profile']);
       },
       (error) => {
         console.log(error);

@@ -22,10 +22,14 @@ export class ProfileService {
   
   createHeaders(): HttpHeaders {
     const token = this.getToken();
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`).append('Content-Type', 'application/json');
   }
 
   getProfile(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/profile/`, { headers: this.createHeaders() });
+  }
+
+  updateProfile(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/profile/`, data, { headers: this.createHeaders() });
   }
 }

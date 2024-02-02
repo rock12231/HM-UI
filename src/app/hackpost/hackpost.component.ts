@@ -6,11 +6,13 @@ import Chart from 'chart.js/auto';
 import { ProfileService } from '../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LeftnavComponent } from '../leftnav/leftnav.component';
+import { TopnavComponent } from '../topnav/topnav.component';
 
 @Component({
   selector: 'app-hackpost',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,LeftnavComponent,TopnavComponent],
   templateUrl: './hackpost.component.html',
   styleUrl: './hackpost.component.css'
 })
@@ -23,19 +25,19 @@ export class HackpostComponent {
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService, private profileService: ProfileService) {
     
-    if (this.authService.isAuthenticated()) {
-      console.log("Authenticated HackpostComponent");
-    } else {
-      this.router.navigate(['/login']);
-    }
+    // if (this.authService.isAuthenticated()) {
+    //   console.log("Authenticated HackpostComponent");
+    // } else {
+    //   this.router.navigate(['/login']);
+    // }
 
   }
 
   ngOnInit() {
     this.getIPAddress();
-    this.chartData1();
-    this.chartData2();
-    this.profile();
+    // this.chartData1();
+    // this.chartData2();
+    // this.profile();
   }
 
   getIPAddress() {
@@ -43,11 +45,6 @@ export class HackpostComponent {
       this.ip = res.ip;
       console.log(this.ip);
     });
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 
   chartData1() {
@@ -103,18 +100,18 @@ export class HackpostComponent {
     });
   }
 
-  profile() {
-    this.profileService.getProfile().subscribe(
-      (response) => {
-        console.log(response, "<<<< profile data");
-        // Convert response to JSON
-        this.profileData = JSON.parse(JSON.stringify(response));        
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  // profile() {
+  //   this.profileService.getProfile().subscribe(
+  //     (response) => {
+  //       console.log(response, "<<<< profile data");
+  //       // Convert response to JSON
+  //       this.profileData = JSON.parse(JSON.stringify(response));        
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
 
 }
