@@ -28,7 +28,7 @@ export class ProfileComponent {
 
   ngOnInit() {
     if (this.token) {
-      console.log("Profile Token : >>>>>", this.token);
+      // console.log("Profile Token : >>>>>", this.token);
       this.profile();
     }
   }

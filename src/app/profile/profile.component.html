@@ -18,10 +18,10 @@
         <!-- Navbar End -->
 
 
-        <div class="container-fluid pt-4 px-4">
+        <!-- <div class="container-fluid pt-4 px-4">
             <h2>Data</h2>
             <p>{{profileData|json}}</p>
-        </div>
+        </div> -->
 
         <!-- Recent Sales Start -->
         <div class="container-fluid pt-4 px-4">
@@ -32,19 +32,16 @@
                 <div class="row">
                     <div class="col-sm-12 col-xl-5">
                         <div class="text-center">
-                            <img class="img-fluid rounded-circle mx-auto mb-4" src="assets/img/testimonial-1.jpg"
-                                style="width: 100px; height: 100px;">
-                            <h5 class="mb-1">{{profileData.username}}</h5>
-                            <p>Profession/Student</p>
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Write Your Bio" id="floatingTextarea" style="height: 150px;"></textarea>
-                                <label for="floatingTextarea">Bio</label>
+                            <!-- <img src="data:image/png;base64,{{ profileData.avatar_data }}" alt="Avatar"> -->
+                            <img class="img-fluid rounded-circle mx-auto mb-4" src="assets/img/testimonial-1.jpg" style="width: 100px; height: 100px;">
+                            <h5 class="mb-1">{{profileData.username|titlecase}}</h5>
+                            <p *ngIf="profileData.occupation == 'P' ">Professional</p>
+                            <p *ngIf="profileData.occupation == 'S' ">Student</p>
+                            <!-- <p *ngIf="profileData.professional && profileData.student" >Profession/Student</p> -->
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" disabled value="{{profileData.email}}">
+                                <label for="floatingInput">Email address</label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-7">
-                        <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Floating Label</h6>
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="First Name" [(ngModel)]="profileData.first_name"  value="{{profileData.first_name}}">
                                 <label for="floatingInput">First Name</label>
@@ -53,10 +50,48 @@
                                 <input type="email" class="form-control" id="floatingInput" placeholder="Last Name" [(ngModel)]="profileData.last_name" value="{{profileData.last_name}}">
                                 <label for="floatingInput">Last Name</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" disabled value="{{profileData.email}}">
-                                <label for="floatingInput">Email address</label>
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Write Your Bio" id="floatingTextarea" style="height: 150px;">
+                                    {{profileData.bio}}
+                                </textarea>
+                                <label for="floatingTextarea">Bio</label>
                             </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-xl-6">
+                                    <div class="bg-secondary rounded h-100 p-4">
+                                        <h6 class="mb-1">Occupation</h6>
+                                        <select [(ngModel)]="profileData.occupation" class="form-select mb-3" aria-label="Default select example">
+                                            <option selected="">Select Occupation</option>
+                                            <option value="S">Student</option>
+                                            <option value="P">Professional</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xl-6">
+                                    <div class="bg-secondary rounded h-100 p-4">
+                                        <h6 class="mb-1">Gender</h6>
+                                        <select [(ngModel)]="profileData.gender" class="form-select mb-3" aria-label="Default select example">
+                                            <option selected="">select gender</option>
+                                            <option value="M">Male</option>
+                                            <option value="F">Female</option>
+                                            <option value="O">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="ABCD University" [(ngModel)]="profileData.college" value="{{profileData.college}}">
+                            <label for="floatingInput">College Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="CSE" [(ngModel)]="profileData.branch" value="{{profileData.branch}}">
+                            <label for="floatingInput">Branch Name</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-7">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">All Details</h6>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" placeholder="Github Link" [(ngModel)]="profileData.githublink" value="{{profileData.githublink}}">
                                 <label for="floatingInput">Github Link</label>
@@ -80,6 +115,10 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" placeholder="Stackoverflow Link" [(ngModel)]="profileData.stackoverflowlink" value="{{profileData.stackoverflowlink}}">
                                 <label for="floatingInput">Stackoverflow Link</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="Other Link" [(ngModel)]="profileData.otherlink" value="{{profileData.otherlink}}">
+                                <label for="floatingInput">Other Link</label>
                             </div>
                             <!-- <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect"
@@ -107,12 +146,11 @@
             <div class="bg-secondary rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                        &copy; <a href="#">HackMates</a>, All Right Reserved.
                     </div>
                     <div class="col-12 col-sm-6 text-center text-sm-end">
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        Designed By <a href="https://github.com/rock12231">ROCK</a>
+                        <!-- <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a> -->
                     </div>
                 </div>
             </div>

@@ -23,7 +23,7 @@ export class RegisterComponent {
   }
 
   getGithubId(): void {
-    if (this.gid.length > 30) {
+    if (this.gid.length > 3) {
       this.authService.getGithubId(this.gid).subscribe(
         (response) => {
           console.log(response);

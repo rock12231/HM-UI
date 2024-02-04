@@ -22,22 +22,20 @@ export class HackpostComponent {
   ip: string | undefined;
   chart: any = []
   profileData: any = [];
+  token: string | null | undefined;
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService, private profileService: ProfileService) {
-    
-    // if (this.authService.isAuthenticated()) {
-    //   console.log("Authenticated HackpostComponent");
-    // } else {
-    //   this.router.navigate(['/login']);
-    // }
-
+    this.token = this.authService.getToken();
   }
 
   ngOnInit() {
     this.getIPAddress();
     // this.chartData1();
     // this.chartData2();
-    // this.profile();
+    if (this.token) {
+      console.log("Profile Token : >>>>>", this.token);
+      this.profile();
+    }
   }
 
   getIPAddress() {
@@ -100,18 +98,18 @@ export class HackpostComponent {
     });
   }
 
-  // profile() {
-  //   this.profileService.getProfile().subscribe(
-  //     (response) => {
-  //       console.log(response, "<<<< profile data");
-  //       // Convert response to JSON
-  //       this.profileData = JSON.parse(JSON.stringify(response));        
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+  profile() {
+    this.profileService.getProfile().subscribe(
+      (response) => {
+        console.log(response, "<<<< profile data");
+        this.profileData = JSON.parse(JSON.stringify(response));
+        localStorage.setItem('profile', this.profileData);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
 
 }
