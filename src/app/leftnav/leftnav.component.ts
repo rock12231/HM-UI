@@ -13,14 +13,17 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './leftnav.component.css'
 })
 export class LeftnavComponent {
-
-  profileData: any = []
+  username: string = '';
+  // profileData: any = []
   constructor(private router: Router, private authService: AuthenticationService, private profileService: ProfileService) { 
 
-   this.profileData = this.profileService.getProfile().subscribe((res: any) => {
-      this.profileData = res;
-      console.log("Profile Data : >>>>>", this.profileData);
-    });
+  //  this.profileData = this.profileService.getProfile().subscribe((res: any) => {
+  //     this.profileData = res;
+  //     console.log("Profile Data : >>>>>", this.profileData);
+  //   });
+  if (typeof localStorage !== 'undefined') {
+    this.username = localStorage.getItem('username') || '';
+  }
 
 
   }

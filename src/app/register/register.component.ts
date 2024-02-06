@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -36,7 +36,7 @@ export class RegisterComponent {
   }
 
   register(): void {
-    this.authService.register(this.email, this.password).subscribe(
+    this.authService.register(this.gid, this.email, this.password).subscribe(
       (response) => {
         console.log(response);
         this.authService.setToken(response.access, response.refresh);
@@ -47,10 +47,12 @@ export class RegisterComponent {
       }
     );
   }
+
+
+isValidForm(): boolean {
+  return this.gid && this.email && this.email.match('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') && this.password && this.password.length >= 4 || false;
 }
-
-
-
+}
 // {
 //   "login": "rock12231",
 //   "id": 37548802,

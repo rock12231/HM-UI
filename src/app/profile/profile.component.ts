@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { ProfileService } from '../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TopnavComponent } from '../topnav/topnav.component';
@@ -19,22 +18,24 @@ export class ProfileComponent {
 
   profileData: any = [];
   token: string | null | undefined;
+
   constructor(private http: HttpClient,
     private router: Router,
-    private authService: AuthenticationService,
-    private profileService: ProfileService) {
+    private authService: AuthenticationService
+  ) {
     this.token = this.authService.getToken();
-  }
-
-  ngOnInit() {
     if (this.token) {
-      // console.log("Profile Token : >>>>>", this.token);
+      console.log("Profile Token : >>>>>", this.token);
       this.profile();
+    } else {
+      this.router.navigate(['/login']);
     }
   }
 
+  ngOnInit() {  }
+
   profile() {
-    this.profileService.getProfile().subscribe(
+    this.authService.getProfile().subscribe(
       (response) => {
         console.log(response, "<<<< profile data");
         this.profileData = JSON.parse(JSON.stringify(response));
@@ -46,7 +47,7 @@ export class ProfileComponent {
   }
 
   updateProfile() {
-    this.profileService.updateProfile(this.profileData).subscribe(
+    this.authService.updateProfile(this.profileData).subscribe(
       (response) => {
         console.log(response);
         this.profile();
@@ -56,4 +57,6 @@ export class ProfileComponent {
       }
     );
   }
+  
+
 }

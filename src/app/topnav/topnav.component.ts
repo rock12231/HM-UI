@@ -12,13 +12,36 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './topnav.component.css'
 })
 export class TopnavComponent {
-
-  constructor(private router: Router, private authService: AuthenticationService) { }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  token: string | null | undefined;
+  constructor(private router: Router, private authService: AuthenticationService) { 
+    this.token = this.authService.getToken();
+    if (this.token) {
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
+  logout() {
+
+    // // Replace with the actual refresh token
+    // const refreshToken = localStorage.getItem('refresh') ?? '';
+    // this.authService.logout(refreshToken).subscribe(
+    //   () => {
+    //     console.log('Logout successful');
+    //     // Handle any additional logic after successful logout
+    //   },
+    //   error => {
+    //     console.error('Logout failed', error);
+    //     // Handle error, if any
+    //   }
+    // );
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refresh');
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
+      this.router.navigate(['/login']);
+    }
+  }
 
 }

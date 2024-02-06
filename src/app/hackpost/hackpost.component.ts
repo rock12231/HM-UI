@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import Chart from 'chart.js/auto';
-import { ProfileService } from '../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LeftnavComponent } from '../leftnav/leftnav.component';
@@ -12,7 +11,7 @@ import { TopnavComponent } from '../topnav/topnav.component';
 @Component({
   selector: 'app-hackpost',
   standalone: true,
-  imports: [CommonModule,FormsModule,LeftnavComponent,TopnavComponent],
+  imports: [CommonModule, FormsModule, LeftnavComponent, TopnavComponent],
   templateUrl: './hackpost.component.html',
   styleUrl: './hackpost.component.css'
 })
@@ -22,28 +21,38 @@ export class HackpostComponent {
   ip: string | undefined;
   chart: any = []
   profileData: any = [];
+  postData: any = [];
   token: string | null | undefined;
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService, private profileService: ProfileService) {
-    this.token = this.authService.getToken();
+  constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
+    // this.token = this.authService.getToken();
+
   }
 
   ngOnInit() {
-    this.getIPAddress();
+    // this.getIPAddress();
     // this.chartData1();
     // this.chartData2();
-    if (this.token) {
-      console.log("Profile Token : >>>>>", this.token);
-      this.profile();
-    }
+    // if (this.token) {
+    //   console.log("Profile Token : >>>>>", this.token);
+    //   this.profile();
+    // }
+   this.getHackPosts();
   }
 
-  getIPAddress() {
-    this.http.get('https://api.ipify.org/?format=json').subscribe((res: any) => {
-      this.ip = res.ip;
-      console.log(this.ip);
-    });
+  getHackPosts() {
+    this.authService.getHackPosts().subscribe((response) => {
+      console.log(response, "<<<< profile data");
+      this.postData = JSON.parse(JSON.stringify(response));
+    },
+      (error) => { console.log(error); });
   }
+  // getIPAddress() {
+  //   this.http.get('https://api.ipify.org/?format=json').subscribe((res: any) => {
+  //     this.ip = res.ip;
+  //     console.log(this.ip);
+  //   });
+  // }
 
   chartData1() {
     this.chart = new Chart('worldwide-sales', {
@@ -98,18 +107,18 @@ export class HackpostComponent {
     });
   }
 
-  profile() {
-    this.profileService.getProfile().subscribe(
-      (response) => {
-        console.log(response, "<<<< profile data");
-        this.profileData = JSON.parse(JSON.stringify(response));
-        localStorage.setItem('profile', this.profileData);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  // profile() {
+  //   this.profileService.getProfile().subscribe(
+  //     (response) => {
+  //       console.log(response, "<<<< profile data");
+  //       this.profileData = JSON.parse(JSON.stringify(response));
+  //       localStorage.setItem('profile', this.profileData);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
 
 }

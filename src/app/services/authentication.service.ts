@@ -22,6 +22,11 @@ export class AuthenticationService {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('token', access);
       localStorage.setItem('refresh', refresh);
+      const decodedToken = this.jwtHelper.decodeToken(access);
+      // set username and email to local storage
+      localStorage.setItem('username', decodedToken.username);
+      localStorage.setItem('email', decodedToken.email);
+      // console.log("Decoded Token : >>>>>", decodedToken);
     }
   }
 
@@ -63,19 +68,27 @@ export class AuthenticationService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  logout(): void {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('refresh');
-    }
+  logout(refreshToken: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/logout/`, { refresh: refreshToken });
   }
 
-  register(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register/`, { username, password });
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register/`, { username, email, password });
   }
 
   getGithubId(gid: string): Observable<any> {
     return this.http.get<any>(`https://api.github.com/users/${gid}`);
   }
 
+  getProfile(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/profile/`, { headers: this.createHeaders() });
+  }
+
+  updateProfile(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/profile/`, data, { headers: this.createHeaders() });
+  }
+
+  getHackPosts(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/post/`, { headers: this.createHeaders() });
+  }
 }

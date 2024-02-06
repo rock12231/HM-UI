@@ -8,28 +8,22 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class ProfileService {
 
-  private apiUrl = 'http://localhost:8000/api/user';
-  private jwtHelper: JwtHelperService = new JwtHelperService();
+  // private apiUrl = 'http://localhost:8000/api/user';
+  // private jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(private http: HttpClient) { }
+  // constructor(private http: HttpClient) { }
 
-  getToken(): string | null | undefined {
-    if (typeof localStorage !== 'undefined') {
-      return localStorage.getItem('token');
-    }
-    return undefined;
-  }
+  // getToken(): string | null | undefined {
+  //   if (typeof localStorage !== 'undefined') {
+  //     return localStorage.getItem('token');
+  //   }
+  //   return undefined;
+  // }
   
-  createHeaders(): HttpHeaders {
-    const token = this.getToken();
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`).append('Content-Type', 'application/json');
-  }
+  // createHeaders(): HttpHeaders {
+  //   const token = this.getToken();
+  //   return new HttpHeaders().set('Authorization', `Bearer ${token}`).append('Content-Type', 'application/json');
+  // }
 
-  getProfile(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/profile/`, { headers: this.createHeaders() });
-  }
 
-  updateProfile(data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/profile/`, data, { headers: this.createHeaders() });
-  }
 }
