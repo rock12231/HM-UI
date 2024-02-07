@@ -24,7 +24,7 @@
                 <!-- <button type="button" (click)="openPostPopup()" class="btn btn-sm btn-primary mb-3">Post</button> -->
                 <div class="col-sm-12 col-xl-8">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">If Your Want To Post Something click here ... <button type="button" (click)="openPostPopup()" class="btn btn-sm btn-primary">Post</button></h6>
+                        <h6 class="mb-3 text-center">If You Are Looking Member or Team Post Your Request With Information Here ... <button type="button" (click)="openPostPopup()" class="btn btn-sm btn-primary">New Post</button></h6>
                         
                         <!-- <div class="form-floating mb-2">
                             <input [(ngModel)]="currentPost.title" type="text" class="form-control form-control-sm" id="hacknmae" placeholder="ABCD Hackathon">
@@ -78,8 +78,7 @@
                                             <i class="bi bi-three-dots"></i>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" (click)="openPostPopupData(item);updateHackPosts(item)">Edit</a></li>
-                                            <!-- <li><a class="dropdown-item" (click)="updateHackPosts(item)">Edit</a></li> -->
+                                            <li><a class="dropdown-item" (click)="openPostPopupData(item)">Edit</a></li>
                                             <li><a class="dropdown-item" (click)="deleteHackPosts(item.id)">Delete</a></li>
                                         </ul>
                                     </div>
@@ -108,6 +107,40 @@
                 <div class="col-sm-12 col-xl-4">
                     <div class="bg-secondary rounded h-100 p-4">
                         <h6 class="mb-4">Updates</h6>
+                        <!-- {{hData|json}} -->
+                        <!-- <div *ngFor="let item of hData" class="card mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title text-primary">{{item.title}}</h6>
+                                <p class="card-text">Example : I am looking for a team to participate in a hackathon. I am a web developer and I have experience in React, Node.js, and MongoDB. I am looking for a team that has a designer and a backend developer. #react #nodejs #mongodb #backend #frontend #webdeveloper #designer #hackathon</p>
+                              
+                            </div>
+                        </div> -->
+
+                        <div *ngFor="let item of hData" class="col-md-12 mb-4">
+                            <div class="card">
+                              <div class="card-header bg-gradient">
+                                <h5 class="card-title text-dark">{{ item.title }}</h5>
+                              </div>
+                              <div class="card-body">
+                                <p class="card-text">{{ item.description | slice:0:60 }} ...</p>
+                                <hr>
+                                <p class="card-text m-0">
+                                  <i class="far fa-calendar-alt"></i> Start Date: {{ item.start_date | date }}<br>
+                                  <i class="far fa-calendar-alt"></i> End Date: {{ item.end_date | date }}
+                                </p>
+                                <p class="card-text m-0">
+                                  <i class="fas fa-money-bill-wave"></i> Registration Fee: {{ item.registration_fee }}<br>
+                                  <i class="fas fa-trophy"></i> Prize: {{ item.prize }}
+                                </p>
+                              </div>
+                              <div class="card-footer bg-gradient">
+                                <small class="text-muted">
+                                  <i class="fas fa-link"></i> <a href="{{ item.link }}" target="_blank">More Info</a>
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+
                     </div>
                 </div>
 

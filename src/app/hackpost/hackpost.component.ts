@@ -32,12 +32,14 @@ export class HackpostComponent {
   isUpdatebtn: boolean = false;
   isCancelbtn: boolean = false;
   showPostPopup: boolean = false;
+  hData: any = [];
 
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
     this.token = this.authService.getToken();
     if (this.token) {
       this.getHackPosts();
+      this.hackathon();
     } else {
       this.router.navigate(['/login']);
     }
@@ -62,31 +64,6 @@ export class HackpostComponent {
       (error) => { console.log(error); });
   }
 
-  postHackPosts() {
-    this.authService.postHackPosts(this.currentPost).subscribe(
-      (response) => {
-        console.log(response);
-        this.getHackPosts();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  Update(){
-    this.authService.updateHackPosts(this.currentPost.id,this.currentPost).subscribe(
-      (response) => {
-        console.log(response);
-        this.getHackPosts();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.currentPost = {};
-  }
-
   Cancel(){
     this.currentPost = {};
     this.isPostbtn = true;
@@ -94,15 +71,12 @@ export class HackpostComponent {
     this.isCancelbtn = false;
   }
 
-  updateHackPosts(data: any) {
-    this.currentPost = data;
-    this.isPostbtn = false;
-    this.isUpdatebtn = true;
-    this.isCancelbtn = true;
-    // if (this.target && this.target.nativeElement) {
-    //   this.target.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-    // }
-  }
+  // updateHackPosts(data: any) {
+
+  //   // if (this.target && this.target.nativeElement) {
+  //   //   this.target.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+  //   // }
+  // }
 
   deleteHackPosts(id: any) {
     this.authService.deleteHackPosts(id,this.currentPost).subscribe(
@@ -177,20 +151,17 @@ export class HackpostComponent {
     });
   }
 
-  // profile() {
-  //   this.profileService.getProfile().subscribe(
-  //     (response) => {
-  //       console.log(response, "<<<< profile data");
-  //       this.profileData = JSON.parse(JSON.stringify(response));
-  //       localStorage.setItem('profile', this.profileData);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+ // hackathon 
+
+ hackathon() {
+  this.authService.hackeathonData().subscribe((response) => {
+    this.hData = JSON.parse(JSON.stringify(response));
+    console.log(response, "<<<< hackathon data");
+  },);
+}
 
 
+// For Read Posts
   openPopup(item : any) {
     item.showPopup = true;
   }
@@ -202,8 +173,10 @@ export class HackpostComponent {
 
 
 
+  // For new and edit posts
   openPostPopup() {
     this.showPostPopup = true;
+    this.currentPost['isPostbtn'] = true;
   }
 
   closePostPopup() {
@@ -217,6 +190,8 @@ export class HackpostComponent {
   openPostPopupData(item : any) {
     this.currentPost = item;
     this.showPostPopup = true;
+    this.currentPost['isPostbtn'] = false;
+    this.currentPost['isUpdatebtn'] = true;
   }
 
 
