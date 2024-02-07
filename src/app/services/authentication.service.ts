@@ -91,4 +91,16 @@ export class AuthenticationService {
   getHackPosts(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/post/`, { headers: this.createHeaders() });
   }
+
+  postHackPosts(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/post/`, data, { headers: this.createHeaders() });
+  }
+
+  updateHackPosts(id:number, data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/post/${id}/`, data, { headers: this.createHeaders() });
+  }
+
+  deleteHackPosts(id:number, data: any): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/post/${id}/`, { headers: this.createHeaders(), body: data });
+  }
 }

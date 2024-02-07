@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
@@ -7,15 +7,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LeftnavComponent } from '../leftnav/leftnav.component';
 import { TopnavComponent } from '../topnav/topnav.component';
+import { PostPopupComponent } from '../post-popup/post-popup.component';
+import { PostOpenPopupComponent } from '../post-open-popup/post-open-popup.component';
 
 @Component({
   selector: 'app-hackpost',
   standalone: true,
-  imports: [CommonModule, FormsModule, LeftnavComponent, TopnavComponent],
+  imports: [CommonModule, FormsModule, LeftnavComponent, TopnavComponent, PostPopupComponent, PostOpenPopupComponent],
   templateUrl: './hackpost.component.html',
   styleUrl: './hackpost.component.css'
 })
 export class HackpostComponent {
+
+  @ViewChild('target') target: ElementRef | undefined;
 
   title = 'HM-UI';
   ip: string | undefined;
@@ -23,9 +27,20 @@ export class HackpostComponent {
   profileData: any = [];
   postData: any = [];
   token: string | null | undefined;
+  currentPost: any = {};
+  isPostbtn: boolean = true;
+  isUpdatebtn: boolean = false;
+  isCancelbtn: boolean = false;
+  showPostPopup: boolean = false;
+
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
-    // this.token = this.authService.getToken();
+    this.token = this.authService.getToken();
+    if (this.token) {
+      this.getHackPosts();
+    } else {
+      this.router.navigate(['/login']);
+    }
 
   }
 
@@ -37,7 +52,6 @@ export class HackpostComponent {
     //   console.log("Profile Token : >>>>>", this.token);
     //   this.profile();
     // }
-   this.getHackPosts();
   }
 
   getHackPosts() {
@@ -47,6 +61,62 @@ export class HackpostComponent {
     },
       (error) => { console.log(error); });
   }
+
+  postHackPosts() {
+    this.authService.postHackPosts(this.currentPost).subscribe(
+      (response) => {
+        console.log(response);
+        this.getHackPosts();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  Update(){
+    this.authService.updateHackPosts(this.currentPost.id,this.currentPost).subscribe(
+      (response) => {
+        console.log(response);
+        this.getHackPosts();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.currentPost = {};
+  }
+
+  Cancel(){
+    this.currentPost = {};
+    this.isPostbtn = true;
+    this.isUpdatebtn = false;
+    this.isCancelbtn = false;
+  }
+
+  updateHackPosts(data: any) {
+    this.currentPost = data;
+    this.isPostbtn = false;
+    this.isUpdatebtn = true;
+    this.isCancelbtn = true;
+    // if (this.target && this.target.nativeElement) {
+    //   this.target.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    // }
+  }
+
+  deleteHackPosts(id: any) {
+    this.authService.deleteHackPosts(id,this.currentPost).subscribe(
+      (response) => {
+        console.log(response);
+        this.getHackPosts();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+
   // getIPAddress() {
   //   this.http.get('https://api.ipify.org/?format=json').subscribe((res: any) => {
   //     this.ip = res.ip;
@@ -121,4 +191,35 @@ export class HackpostComponent {
   // }
 
 
+  openPopup(item : any) {
+    item.showPopup = true;
+  }
+
+  closePopup(item : any) {
+    item.showPopup = false;
+  }
+
+
+
+
+  openPostPopup() {
+    this.showPostPopup = true;
+  }
+
+  closePostPopup() {
+    this.showPostPopup = false;
+  }
+
+  editPostPopup(item : any) {
+    this.showPostPopup = true;
+  }
+
+  openPostPopupData(item : any) {
+    this.currentPost = item;
+    this.showPostPopup = true;
+  }
+
+
+
+  
 }

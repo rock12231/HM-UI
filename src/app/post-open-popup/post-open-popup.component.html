@@ -1,0 +1,42 @@
+<div class="popup-container">
+    <div class="popup">
+        <div class="col-sm-12 col-xl-12">
+        <div class="d-flex float-end m-2" (click)="Cancel()"><i class="fa fa-times"></i></div>
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Post</h6>
+                <div class="form-floating mb-2">
+                    <input [(ngModel)]="currentPost.title" type="text" class="form-control form-control-sm"
+                        id="hacknmae" placeholder="ABCD Hackathon">
+                    <label for="hacknmae">Hackathon Name</label>
+                </div>
+                <div class="form-floating">
+                    <textarea [(ngModel)]="currentPost.content" class="form-control" placeholder="Write Your Post Here ..." id="posthere" style="height: 100px;"></textarea>
+                    <label for="posthere">Write Your Post Here ...</label>
+                </div>
+                <div class="row">
+                    <div class="col-3 mb-1 mt-2">
+                        <select [(ngModel)]="currentPost.types" class="form-select form-select-sm">
+                            <option [ngValue]="null" [selected]="!currentPost.types">Looking For</option>
+                            <option value="Team">Team</option>
+                            <option value="Member">Member</option>
+                        </select>
+                    </div>
+                    <div class="col-3 mb-1 mt-2">
+                        <select [(ngModel)]="currentPost.member" class="form-select form-select-sm">
+                            <option [ngValue]="null" [selected]="!currentPost.member">Number Of Member</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-3 mb-1 mt-2"></div>
+                    <div class="col-3 d-inline-flex gap-1 mt-2">
+                        <button *ngIf="isPostbtn" type="button" (click)="postHackPosts()" class="btn btn-sm btn-outline-success">Post</button>
+                        <button *ngIf="isUpdatebtn" type="button" (click)="Update()" class="btn btn-sm btn-outline-primary">Update</button>
+                        <button type="button" (click)="Cancel()" class="btn btn-sm btn-outline-danger">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

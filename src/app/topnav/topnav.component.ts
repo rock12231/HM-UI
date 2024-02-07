@@ -13,11 +13,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class TopnavComponent {
   token: string | null | undefined;
+  username: string | null | undefined;
+
   constructor(private router: Router, private authService: AuthenticationService) { 
-    this.token = this.authService.getToken();
-    if (this.token) {
-    } else {
-      this.router.navigate(['/login']);
+    if (typeof localStorage !== 'undefined') {
+    this.username = localStorage.getItem('username');
     }
   }
 

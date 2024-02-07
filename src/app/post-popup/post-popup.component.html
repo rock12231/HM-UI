@@ -1,0 +1,36 @@
+<div class="popup-container">
+    
+    <div class="popup">
+        <div class="d-flex float-end m-2" (click)="closePopup()"><i class="fa fa-times"></i></div>
+        <div class="card mb-3">
+            <div class="card-body text-muted">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <img src="assets/img/user.jpg" class="rounded-circle" width="40" height="40" alt="...">
+                        <div class="ms-2">
+                            <h6 class="card-title
+                            text-dark">{{postData.user|titlecase}}</h6>
+                            <p class="card-text"><small class="text-muted">{{postData.created_at|date:'MMM d,h:mm a'}} <ng-container *ngIf="postData.created_at != postData.updated_at">[Edited : {{postData.updated_at|date:'MMM d,h:mm a'}}]</ng-container></small></p>
+                        </div>
+                    </div>
+                    <div class="dropdown dropstart">
+                        <button class="btn btn-sm btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+                    </div>
+                </div>
+                <h6 class="card-title mt-1 text-primary">{{postData.title|titlecase}} <i class="text-muted">( Looking For {{postData.types}}: {{postData.member}})</i></h6>
+                <p class="card-text">{{postData.content}}</p>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-sm btn-outline-primary"> <i class="fa fa-heart"> {{postData.like_count}}</i></button>
+                        <button type="button" class="btn btn-sm ms-2 btn-outline-primary"> <i class="fa fa-comment"> {{postData.comment_count}}</i></button>
+                   </div>
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-sm btn-outline-primary"><i class="fa fa-share"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
