@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { AboutComponent } from './about/about.component';
 import { OpenPostComponent } from './open-post/open-post.component';
+import { PublicProfileComponent } from './public-profile/public-profile.component';
 
 export const routes: Routes = [
     { path: '', component: HackpostComponent },
@@ -14,10 +15,11 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'notfound', component: PageNotFoundComponent },
-    { path: '**', redirectTo: '/notfound' },
+    // { path: '**', redirectTo: '/notfound' },
     { path: 'forget-pass', component: ForgetPasswordComponent },
     { path: 'about', component: AboutComponent },
-    { path: 'open-post', component: OpenPostComponent}
+    // { path: 'open-post', component: OpenPostComponent}
+    { path: 'publicprofile', component: PublicProfileComponent}
     
     // { path: '',   redirectTo: '/login', pathMatch: 'full' },
 ];

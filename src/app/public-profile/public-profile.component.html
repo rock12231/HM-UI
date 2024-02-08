@@ -1,1 +1,86 @@
-<p>public-profile works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-muted">User Profile</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <img src="assets/img/testimonial-1.jpg" alt="Avatar" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                            </div>
+                            <h5 class="text-center text-primary mt-3"><i class="bi bi-profile"></i>{{ profile.username|titlecase }}</h5>
+                            <!-- Add like and Dislike buttons centered -->
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="btn btn-sm btn-outline-success me-2">
+                                    <i class="bi bi-hand-thumbs-up"></i> Like
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-hand-thumbs-down"></i> Dislike
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <p><i class="bi bi-envelope"></i> Email: {{ profile.email }}</p>
+                                  <p><i class="bi bi-person-lines-fill"></i> Bio: {{ profile.bio }}</p>
+                                  <p><i class="bi bi-building"></i> College: {{ profile.college }}</p>
+                                  <p><i class="bi bi-gender"></i> Gender: {{ profile.gender }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                  <p><i class="bi bi-journal-richtext"></i> Branch: {{ profile.branch }}</p>
+                                  <p><i class="bi bi-calendar"></i> Year: {{ profile.year }}</p>
+                                  <p><i class="bi bi-journal-text"></i> Batch: {{ profile.batch }}</p>
+                                  <p><i class="bi bi-briefcase"></i> Occupation: {{ profile.occupation }}</p>
+                                </div>
+                              </div>
+                            <hr>
+                            <h6>Social Links:</h6>
+                            <div class="d-flex flex-wrap">
+                              <p class="me-3">
+                                <a href="{{ profile.githublink }}" target="_blank">
+                                  <i class="bi bi-github"></i> GitHub
+                                </a>
+                              </p>
+                              <p class="me-3">
+                                <a href="{{ profile.linkedinlink }}" target="_blank">
+                                  <i class="bi bi-linkedin"></i> LinkedIn
+                                </a>
+                              </p>
+                              <p class="me-3">
+                                <a href="{{ profile.twitterlink }}" target="_blank">
+                                  <i class="bi bi-twitter"></i> Twitter
+                                </a>
+                              </p>
+                              <p class="me-3">
+                                <a href="{{ profile.instagramlink }}" target="_blank">
+                                  <i class="bi bi-instagram"></i> Instagram
+                                </a>
+                              </p>
+                              <p class="me-3">
+                                <a href="{{ profile.facebooklink }}" target="_blank">
+                                  <i class="bi bi-facebook"></i> Facebook
+                                </a>
+                              </p>
+                              <p class="me-3">
+                                <a href="{{ profile.stackoverflowlink }}" target="_blank">
+                                  <i class="bi bi-stackoverflow"></i> Stack Overflow
+                                </a>
+                              </p>
+                              <p class="me-3">
+                                <a href="{{ profile.otherlink }}" target="_blank">
+                                  <i class="bi bi-link"></i> Other
+                                </a>
+                              </p>
+                            </div>
+                          </div>
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
