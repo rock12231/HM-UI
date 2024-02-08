@@ -35,13 +35,14 @@
                             <!-- <img src="data:image/png;base64,{{ profileData.avatar_data }}" alt="Avatar"> -->
                             <img class="img-fluid rounded-circle mx-auto mb-4" src="assets/img/testimonial-1.jpg" style="width: 100px; height: 100px;">
                             <h5 class="mb-1">{{profileData.username|titlecase}}</h5>
-                            <p *ngIf="profileData.occupation == 'P' ">Professional</p>
-                            <p *ngIf="profileData.occupation == 'S' ">Student</p>
+                            <span *ngIf="profileData.occupation == 'P' ">Professional</span>
+                            <span *ngIf="profileData.occupation == 'S' ">Student</span>
                             <!-- <p *ngIf="profileData.professional && profileData.student" >Profession/Student</p> -->
-                            <div class="form-floating mb-3">
+                            <h6 class="mb-2">Email : {{profileData.email}}</h6>
+                            <!-- <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" disabled value="{{profileData.email}}">
                                 <label for="floatingInput">Email address</label>
-                            </div>
+                            </div> -->
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="First Name" [(ngModel)]="profileData.first_name"  value="{{profileData.first_name}}">
                                 <label for="floatingInput">First Name</label>
