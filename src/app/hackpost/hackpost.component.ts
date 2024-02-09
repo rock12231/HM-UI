@@ -19,12 +19,14 @@ import { PostOpenPopupComponent } from '../post-open-popup/post-open-popup.compo
 })
 export class HackpostComponent {
 
-  @ViewChild('target') target: ElementRef | undefined;
+  // @ViewChild('target') target: ElementRef | undefined;
+  isSidebarOpen: boolean = false;
 
-  title = 'HM-UI';
-  ip: string | undefined;
-  chart: any = []
-  profileData: any = [];
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  title = 'Landing Page';
   postData: any = [];
   token: string | null | undefined;
   currentPost: any = {};
@@ -37,28 +39,20 @@ export class HackpostComponent {
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
     this.token = this.authService.getToken();
+  }
+
+  ngOnInit() {
     if (this.token) {
       this.getHackPosts();
       this.hackathon();
     } else {
       this.router.navigate(['/login']);
     }
-
-  }
-
-  ngOnInit() {
-    // this.getIPAddress();
-    // this.chartData1();
-    // this.chartData2();
-    // if (this.token) {
-    //   console.log("Profile Token : >>>>>", this.token);
-    //   this.profile();
-    // }
   }
 
   getHackPosts() {
     this.authService.getHackPosts().subscribe((response) => {
-      console.log(response, "<<<< profile data");
+      console.log(response, "<<<< all posts");
       this.postData = JSON.parse(JSON.stringify(response));
     },
       (error) => { console.log(error); });
@@ -71,12 +65,15 @@ export class HackpostComponent {
     this.isCancelbtn = false;
   }
 
-  // updateHackPosts(data: any) {
 
-  //   // if (this.target && this.target.nativeElement) {
-  //   //   this.target.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-  //   // }
-  // }
+  postLike(id:number){
+    const postId = id
+    this.authService.postLike(postId).subscribe((response) => {
+      console.log(response, "<<<< all posts");
+      this.getHackPosts();
+    },
+      (error) => { console.log(error); });
+  }
 
   deleteHackPosts(id: any) {
     this.authService.deleteHackPosts(id,this.currentPost).subscribe(
@@ -90,74 +87,17 @@ export class HackpostComponent {
     );
   }
 
-
-  // getIPAddress() {
-  //   this.http.get('https://api.ipify.org/?format=json').subscribe((res: any) => {
-  //     this.ip = res.ip;
-  //     console.log(this.ip);
-  //   });
-  // }
-
-  chartData1() {
-    this.chart = new Chart('worldwide-sales', {
-      type: "bar",
-      data: {
-        labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-        datasets: [{
-          label: "USA",
-          data: [15, 30, 55, 65, 60, 80, 95],
-          backgroundColor: "rgba(235, 22, 22, .7)"
-        },
-        {
-          label: "UK",
-          data: [8, 35, 40, 60, 70, 55, 75],
-          backgroundColor: "rgba(235, 22, 22, .5)"
-        },
-        {
-          label: "AU",
-          data: [12, 25, 45, 55, 65, 70, 60],
-          backgroundColor: "rgba(235, 22, 22, .3)"
-        }
-        ]
-      },
-      options: {
-        responsive: true
-      }
-    });
-  }
-
-  chartData2() {
-    this.chart = new Chart('salse-revenue', {
-      type: "line",
-      data: {
-        labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-        datasets: [{
-          label: "Salse",
-          data: [15, 30, 55, 45, 70, 65, 85],
-          backgroundColor: "rgba(235, 22, 22, .7)",
-          fill: true
-        },
-        {
-          label: "Revenue",
-          data: [99, 135, 170, 130, 190, 180, 270],
-          backgroundColor: "rgba(235, 22, 22, .5)",
-          fill: true
-        }
-        ]
-      },
-      options: {
-        responsive: true
-      }
-    });
-  }
-
- // hackathon 
-
+ // hackathon data
  hackathon() {
   this.authService.hackeathonData().subscribe((response) => {
     this.hData = JSON.parse(JSON.stringify(response));
     console.log(response, "<<<< hackathon data");
   },);
+}
+
+// For new and edit posts emit from child component popup
+updateData() {
+  this.getHackPosts();
 }
 
 
@@ -170,9 +110,6 @@ export class HackpostComponent {
     item.showPopup = false;
   }
 
-
-
-
   // For new and edit posts
   openPostPopup() {
     this.showPostPopup = true;
@@ -181,6 +118,7 @@ export class HackpostComponent {
 
   closePostPopup() {
     this.showPostPopup = false;
+    this.currentPost = {};
   }
 
   editPostPopup(item : any) {
@@ -194,7 +132,59 @@ export class HackpostComponent {
     this.currentPost['isUpdatebtn'] = true;
   }
 
-
-
   
 }
+
+// chart: any = []
+// chartData1() {
+//   this.chart = new Chart('worldwide-sales', {
+//     type: "bar",
+//     data: {
+//       labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+//       datasets: [{
+//         label: "USA",
+//         data: [15, 30, 55, 65, 60, 80, 95],
+//         backgroundColor: "rgba(235, 22, 22, .7)"
+//       },
+//       {
+//         label: "UK",
+//         data: [8, 35, 40, 60, 70, 55, 75],
+//         backgroundColor: "rgba(235, 22, 22, .5)"
+//       },
+//       {
+//         label: "AU",
+//         data: [12, 25, 45, 55, 65, 70, 60],
+//         backgroundColor: "rgba(235, 22, 22, .3)"
+//       }
+//       ]
+//     },
+//     options: {
+//       responsive: true
+//     }
+//   });
+// }
+
+// chartData2() {
+//   this.chart = new Chart('salse-revenue', {
+//     type: "line",
+//     data: {
+//       labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+//       datasets: [{
+//         label: "Salse",
+//         data: [15, 30, 55, 45, 70, 65, 85],
+//         backgroundColor: "rgba(235, 22, 22, .7)",
+//         fill: true
+//       },
+//       {
+//         label: "Revenue",
+//         data: [99, 135, 170, 130, 190, 180, 270],
+//         backgroundColor: "rgba(235, 22, 22, .5)",
+//         fill: true
+//       }
+//       ]
+//     },
+//     options: {
+//       responsive: true
+//     }
+//   });
+// }

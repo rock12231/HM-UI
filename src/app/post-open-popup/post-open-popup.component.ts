@@ -14,11 +14,8 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class PostOpenPopupComponent {
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
-  @Output() postSuccess: EventEmitter<void> = new EventEmitter<void>();
+  @Output() updateData: EventEmitter<void> = new EventEmitter<void>();
   @Input() currentPost: any = {};
-
-  profileData: any = [];
-  postData: any = [];
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
     const token = this.authService.getToken();
@@ -29,13 +26,13 @@ export class PostOpenPopupComponent {
   }
 
   postHackPosts() {
+    console.log(this.currentPost);
     this.authService.postHackPosts(this.currentPost).subscribe(
       (response) => {
         console.log(response);
-        // hit the getHackPosts() method to get the updated data in hackposts component
         this.close.emit();
-        // this.getHackPosts();
-        this.postSuccess.emit();
+        this.updateData.emit();
+        this.currentPost = {};
       },
       (error) => {
         console.log(error);
@@ -48,20 +45,19 @@ export class PostOpenPopupComponent {
     this.authService.updateHackPosts(this.currentPost.id,this.currentPost).subscribe(
       (response) => {
         console.log(response);
-        // this.getHackPosts();
+        this.updateData.emit();
         this.close.emit();
-        this.postSuccess.emit();
+        this.currentPost = {};
       },
       (error) => {
         console.log(error);
       }
     );
-    this.currentPost = {};
   }
 
   Cancel(){
     this.close.emit();
-    console.log("close");
+    this.currentPost = {};
   }
 
 }

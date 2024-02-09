@@ -1,164 +1,114 @@
-<div class="container-fluid position-relative d-flex p-0">
-    <!-- Spinner Start -->
-    <!-- <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div> -->
-    <!-- Spinner End -->
 
-    <!-- Sidebar Start -->
-    <app-leftnav></app-leftnav>
-    <!-- Sidebar End -->
-
-    <!-- Content Start -->
-    <div class="content">
-        <!-- Navbar Start -->
-      <app-topnav></app-topnav>
-        <!-- Navbar End -->
-
-
-        <!-- <div class="container-fluid pt-4 px-4">
-            <h2>Data</h2>
-            <p>{{profileData|json}}</p>
-        </div> -->
-
-        <!-- Recent Sales Start -->
-        <div class="container-fluid pt-4 px-4">
-            <div class="bg-secondary text-center rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Profile Details</h6>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-xl-5">
-                        <div class="text-center">
-                            <!-- <img src="data:image/png;base64,{{ profileData.avatar_data }}" alt="Avatar"> -->
-                            <img class="img-fluid rounded-circle mx-auto mb-4" src="assets/img/testimonial-1.jpg" style="width: 100px; height: 100px;">
-                            <h5 class="mb-1">{{profileData.username|titlecase}}</h5>
-                            <span *ngIf="profileData.occupation == 'P' ">Professional</span>
-                            <span *ngIf="profileData.occupation == 'S' ">Student</span>
-                            <!-- <p *ngIf="profileData.professional && profileData.student" >Profession/Student</p> -->
-                            <h6 class="mb-2">Email : {{profileData.email}}</h6>
-                            <!-- <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" disabled value="{{profileData.email}}">
-                                <label for="floatingInput">Email address</label>
-                            </div> -->
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="First Name" [(ngModel)]="profileData.first_name"  value="{{profileData.first_name}}">
-                                <label for="floatingInput">First Name</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="Last Name" [(ngModel)]="profileData.last_name" value="{{profileData.last_name}}">
-                                <label for="floatingInput">Last Name</label>
-                            </div>
-                            <div class="form-floating">
-                                <textarea class="form-control" [(ngModel)]="profileData.bio" placeholder="Write Your Bio" id="floatingTextarea" style="height: 150px;">{{profileData.bio}}</textarea>
-                                <label for="floatingTextarea">Bio</label>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-xl-6">
-                                    <div class="bg-secondary rounded h-100 p-4">
-                                        <h6 class="mb-1">Occupation</h6>
-                                        <select [(ngModel)]="profileData.occupation" class="form-select mb-3" aria-label="Default select example">
-                                            <option [ngValue]="null" [selected]="!profileData.occupation">Select Occupation</option>
-                                            <option value="S">Student</option>
-                                            <option value="P">Professional</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-xl-6">
-                                    <div class="bg-secondary rounded h-100 p-4">
-                                        <h6 class="mb-1">Gender</h6>
-                                        <select [(ngModel)]="profileData.gender" class="form-select mb-3" aria-label="Default select example">
-                                            <option [ngValue]="null" [selected]="!profileData.gender">select gender</option>
-                                            <option value="M">Male</option>
-                                            <option value="F">Female</option>
-                                            <option value="O">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="ABCD University" [(ngModel)]="profileData.college" value="{{profileData.college}}">
-                            <label for="floatingInput">College Name</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="CSE" [(ngModel)]="profileData.branch" value="{{profileData.branch}}">
-                            <label for="floatingInput">Branch Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-7">
-                        <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">All Details</h6>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Github Link" [(ngModel)]="profileData.githublink" value="{{profileData.githublink}}">
-                                <label for="floatingInput">Github Link</label>
-                            </div>
-                           <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Linkedin Link" [(ngModel)]="profileData.linkedinlink" value="{{profileData.linkedinlink}}">
-                                <label for="floatingInput">Linkedin Link</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Twitter Link" [(ngModel)]="profileData.twitterlink" value="{{profileData.twitterlink}}">
-                                <label for="floatingInput">Twitter Link</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Facebook Link" [(ngModel)]="profileData.facebooklink" value="{{profileData.facebooklink}}">
-                                <label for="floatingInput">Facebook Link</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Instagram Link" [(ngModel)]="profileData.instagramlink" value="{{profileData.instagramlink}}">
-                                <label for="floatingInput">Instagram Link</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Stackoverflow Link" [(ngModel)]="profileData.stackoverflowlink" value="{{profileData.stackoverflowlink}}">
-                                <label for="floatingInput">Stackoverflow Link</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Other Link" [(ngModel)]="profileData.otherlink" value="{{profileData.otherlink}}">
-                                <label for="floatingInput">Other Link</label>
-                            </div>
-                            <!-- <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example">
-                                    <option selected="">Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                                <label for="floatingSelect">Works with selects</label>
-                            </div> -->
-                            
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-12">
-                        <button type="button" (click)="updateProfile()" class="btn btn-primary m-2">Update Profile<i class="fa fa-upload ms-2"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Recent Sales End -->
-
-        <!-- Footer Start -->
-        <div class="container-fluid pt-4 px-4">
-            <div class="bg-secondary rounded-top p-4">
-                <div class="row">
-                    <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">HackMates</a>, All Right Reserved.
-                    </div>
-                    <div class="col-12 col-sm-6 text-center text-sm-end">
-                        Designed By <a href="https://github.com/rock12231">ROCK</a>
-                        <!-- <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
+<div class="bg-secondary text-center rounded p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="mb-0">Profile Details</h6>
     </div>
-    <!-- Content End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <div class="row">
+        <div class="col-sm-12 col-xl-5">
+            <div class="text-center">
+                <!-- <img src="data:image/png;base64,{{ profileData.avatar_data }}" alt="Avatar"> -->
+                <img class="img-fluid rounded-circle mx-auto mb-4" src="assets/img/testimonial-1.jpg" style="width: 100px; height: 100px;">
+                <h5 class="mb-1">{{profileData.username|titlecase}}</h5>
+                <span *ngIf="profileData.occupation == 'P' ">Professional</span>
+                <span *ngIf="profileData.occupation == 'S' ">Student</span>
+                <!-- <p *ngIf="profileData.professional && profileData.student" >Profession/Student</p> -->
+                <h6 class="mb-2">Email : {{profileData.email}}</h6>
+                <!-- <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" disabled value="{{profileData.email}}">
+                    <label for="floatingInput">Email address</label>
+                </div> -->
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="First Name" [(ngModel)]="profileData.first_name"  value="{{profileData.first_name}}">
+                    <label for="floatingInput">First Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Last Name" [(ngModel)]="profileData.last_name" value="{{profileData.last_name}}">
+                    <label for="floatingInput">Last Name</label>
+                </div>
+                <div class="form-floating">
+                    <textarea class="form-control" [(ngModel)]="profileData.bio" placeholder="Write Your Bio" id="floatingTextarea" style="height: 150px;">{{profileData.bio}}</textarea>
+                    <label for="floatingTextarea">Bio</label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-1">Occupation</h6>
+                            <select [(ngModel)]="profileData.occupation" class="form-select mb-3" aria-label="Default select example">
+                                <option [ngValue]="null" [selected]="!profileData.occupation">Select Occupation</option>
+                                <option value="S">Student</option>
+                                <option value="P">Professional</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-1">Gender</h6>
+                            <select [(ngModel)]="profileData.gender" class="form-select mb-3" aria-label="Default select example">
+                                <option [ngValue]="null" [selected]="!profileData.gender">select gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="ABCD University" [(ngModel)]="profileData.college" value="{{profileData.college}}">
+                <label for="floatingInput">College Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="CSE" [(ngModel)]="profileData.branch" value="{{profileData.branch}}">
+                <label for="floatingInput">Branch Name</label>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-7">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">All Details</h6>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Github Link" [(ngModel)]="profileData.githublink" value="{{profileData.githublink}}">
+                    <label for="floatingInput">Github Link</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Linkedin Link" [(ngModel)]="profileData.linkedinlink" value="{{profileData.linkedinlink}}">
+                    <label for="floatingInput">Linkedin Link</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Twitter Link" [(ngModel)]="profileData.twitterlink" value="{{profileData.twitterlink}}">
+                    <label for="floatingInput">Twitter Link</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Facebook Link" [(ngModel)]="profileData.facebooklink" value="{{profileData.facebooklink}}">
+                    <label for="floatingInput">Facebook Link</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Instagram Link" [(ngModel)]="profileData.instagramlink" value="{{profileData.instagramlink}}">
+                    <label for="floatingInput">Instagram Link</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Stackoverflow Link" [(ngModel)]="profileData.stackoverflowlink" value="{{profileData.stackoverflowlink}}">
+                    <label for="floatingInput">Stackoverflow Link</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Other Link" [(ngModel)]="profileData.otherlink" value="{{profileData.otherlink}}">
+                    <label for="floatingInput">Other Link</label>
+                </div>
+                <!-- <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect"
+                        aria-label="Floating label select example">
+                        <option selected="">Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <label for="floatingSelect">Works with selects</label>
+                </div> -->
+                
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-12">
+            <button type="button" (click)="updateProfile()" class="btn btn-primary m-2">Update Profile<i class="fa fa-upload ms-2"></i></button>
+        </div>
+    </div>
 </div>
+       

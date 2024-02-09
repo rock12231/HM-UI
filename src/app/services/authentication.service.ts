@@ -108,4 +108,8 @@ export class AuthenticationService {
     return this.http.get<any>(`${this.apiUrl}/hackeathon/`, { headers: this.createHeaders() });
   }
 
+  postLike(id: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/post/like/${id}/`,{ headers: this.createHeaders() });
+  }
+
 }

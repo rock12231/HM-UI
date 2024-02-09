@@ -8,18 +8,31 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { AboutComponent } from './about/about.component';
 import { OpenPostComponent } from './open-post/open-post.component';
 import { PublicProfileComponent } from './public-profile/public-profile.component';
+import { HmFrameComponent } from './hm-frame/hm-frame.component';
 
 export const routes: Routes = [
-    { path: '', component: HackpostComponent },
+    // { path: '', component: HmFrameComponent }, make this component common in hackpost and profile 
+    // { path: '', component: HackpostComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'profile', component: ProfileComponent },
-    { path: 'notfound', component: PageNotFoundComponent },
-    // { path: '**', redirectTo: '/notfound' },
     { path: 'forget-pass', component: ForgetPasswordComponent },
-    { path: 'about', component: AboutComponent },
     // { path: 'open-post', component: OpenPostComponent}
-    { path: 'publicprofile', component: PublicProfileComponent}
-    
     // { path: '',   redirectTo: '/login', pathMatch: 'full' },
+    
+    { 
+        path: '', component: HmFrameComponent, // Use ParentComponent for the default path
+        children: [
+            { path: '', component: HackpostComponent }, // Default child route
+            { path: 'profile', component: ProfileComponent },
+            { path: 'publicprofile', component: PublicProfileComponent},
+            { path: 'about', component: AboutComponent },
+
+            { path: 'notfound', component: PageNotFoundComponent },
+            { path: '**', redirectTo: '/notfound' },
+
+            
+        ]
+      },
+
+
 ];
