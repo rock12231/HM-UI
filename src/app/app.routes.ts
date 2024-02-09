@@ -22,7 +22,7 @@ export const routes: Routes = [
     { 
         path: '', component: HmFrameComponent, // Use ParentComponent for the default path
         children: [
-            { path: '', component: HackpostComponent }, // Default child route
+            { path: 'feed', component: HackpostComponent }, // Default child route
             { path: 'profile', component: ProfileComponent },
             { path: 'publicprofile', component: PublicProfileComponent},
             { path: 'about', component: AboutComponent },
