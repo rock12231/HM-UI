@@ -16,15 +16,21 @@ export class RegisterComponent {
 
   email: string = '';
   password: string = '';
-  gid: string = 'rock12231';
+  git_id: string = 'rock12231';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
+      const token = this.authService.getToken();
+      if (token) {
+        this.router.navigate(['/profile']);
+      }
     console.log("RegisterComponent");
   }
 
+
+
   getGithubId(): void {
-    if (this.gid.length > 3) {
-      this.authService.getGithubId(this.gid).subscribe(
+    if (this.git_id.length > 3) {
+      this.authService.getGithubId(this.git_id).subscribe(
         (response) => {
           console.log(response);
         },
@@ -36,7 +42,7 @@ export class RegisterComponent {
   }
 
   register(): void {
-    this.authService.register(this.gid, this.email, this.password).subscribe(
+    this.authService.register(this.git_id, this.email, this.password).subscribe(
       (response) => {
         console.log(response);
         this.authService.setToken(response.access, response.refresh);
@@ -50,7 +56,7 @@ export class RegisterComponent {
 
 
 isValidForm(): boolean {
-  return this.gid && this.email && this.email.match('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') && this.password && this.password.length >= 4 || false;
+  return this.git_id && this.email && this.email.match('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') && this.password && this.password.length >= 4 || false;
 }
 }
 // {

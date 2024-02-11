@@ -12,29 +12,13 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './topnav.component.css'
 })
 export class TopnavComponent {
-  token: string | null | undefined;
-  username: string | null | undefined;
 
-  constructor(private router: Router, private authService: AuthenticationService) { 
-    if (typeof localStorage !== 'undefined') {
-    this.username = localStorage.getItem('username');
-    }
+  username: string | null | undefined='';
+  constructor(private authService: AuthenticationService,private router: Router) { 
+    this.username = this.authService.getUsername();
   }
 
   logout() {
-
-    // // Replace with the actual refresh token
-    // const refreshToken = localStorage.getItem('refresh') ?? '';
-    // this.authService.logout(refreshToken).subscribe(
-    //   () => {
-    //     console.log('Logout successful');
-    //     // Handle any additional logic after successful logout
-    //   },
-    //   error => {
-    //     console.error('Logout failed', error);
-    //     // Handle error, if any
-    //   }
-    // );
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('refresh');

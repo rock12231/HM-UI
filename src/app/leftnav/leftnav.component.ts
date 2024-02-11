@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
-import { Router, RouterModule } from '@angular/router';
-import { ProfileService } from '../services/profile.service';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -13,19 +12,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './leftnav.component.css'
 })
 export class LeftnavComponent {
-  username: string = '';
-  // profileData: any = []
-  constructor(private router: Router, private authService: AuthenticationService, private profileService: ProfileService) { 
-
-  //  this.profileData = this.profileService.getProfile().subscribe((res: any) => {
-  //     this.profileData = res;
-  //     console.log("Profile Data : >>>>>", this.profileData);
-  //   });
-  if (typeof localStorage !== 'undefined') {
-    this.username = localStorage.getItem('username') || '';
-  }
-
-
+  username: string | null | undefined='';
+  constructor(private authService: AuthenticationService) { 
+    this.username = this.authService.getUsername();
   }
 
 }

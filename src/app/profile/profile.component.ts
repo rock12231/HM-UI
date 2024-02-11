@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TopnavComponent } from '../topnav/topnav.component';
 import { LeftnavComponent } from '../leftnav/leftnav.component';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,18 +22,21 @@ export class ProfileComponent {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private spinnerService: SpinnerService
   ) {
+    this.spinnerService.show();
     this.token = this.authService.getToken();
     if (this.token) {
-      console.log("Profile Token : >>>>>", this.token);
       this.profile();
-    } else {
-      this.router.navigate(['/login']);
     }
   }
 
-  ngOnInit() {  }
+  ngOnInit() {
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 300);
+  }
 
   profile() {
     this.authService.getProfile().subscribe(
@@ -57,6 +61,6 @@ export class ProfileComponent {
       }
     );
   }
-  
+
 
 }

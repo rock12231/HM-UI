@@ -2,18 +2,20 @@ import { Component,ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import Chart from 'chart.js/auto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LeftnavComponent } from '../leftnav/leftnav.component';
 import { TopnavComponent } from '../topnav/topnav.component';
 import { PostPopupComponent } from '../post-popup/post-popup.component';
 import { PostOpenPopupComponent } from '../post-open-popup/post-open-popup.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-hackpost',
   standalone: true,
-  imports: [CommonModule, FormsModule, LeftnavComponent, TopnavComponent, PostPopupComponent, PostOpenPopupComponent],
+  imports: [CommonModule, FormsModule, LeftnavComponent, TopnavComponent, PostPopupComponent, PostOpenPopupComponent,
+  SpinnerComponent],
   templateUrl: './hackpost.component.html',
   styleUrl: './hackpost.component.css'
 })
@@ -21,6 +23,8 @@ export class HackpostComponent {
 
   // @ViewChild('target') target: ElementRef | undefined;
   isSidebarOpen: boolean = false;
+  searchTopic:string = '';
+  searchType:string = '';
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -36,26 +40,61 @@ export class HackpostComponent {
   showPostPopup: boolean = false;
   hData: any = [];
 
+  page: number = 1;
+  pageSize: number = 10;
+  loading: boolean = false;
+  totalItems: number = 0;
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthenticationService) {
+  constructor(private http: HttpClient, private router: Router,
+     private authService: AuthenticationService,
+     private spinnerService: SpinnerService) {
+    this.spinnerService.show();
     this.token = this.authService.getToken();
   }
 
+
   ngOnInit() {
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 300);
     if (this.token) {
       this.getHackPosts();
       this.hackathon();
-    } else {
-      this.router.navigate(['/login']);
     }
   }
 
+  clearVal() {
+    this.searchTopic = '';
+    this.searchType = '';
+    this.getHackPosts();
+  }
+
   getHackPosts() {
-    this.authService.getHackPosts().subscribe((response) => {
+    this.authService.getHackPosts(this.page, this.pageSize).subscribe((response) => {
       console.log(response, "<<<< all posts");
-      this.postData = JSON.parse(JSON.stringify(response));
+      this.postData = JSON.parse(JSON.stringify(response.results));
+      this.loading = false;
+      this.totalItems = response.count;
+      // this.page++;
     },
       (error) => { console.log(error); });
+      this.loading = true;
+  }
+
+  loadMore() {
+    if (!this.loading && 10*this.page >= this.totalItems) {
+      this.getHackPosts();
+    }
+  }
+
+  getSearchedPosts() {
+    if(this.searchTopic.length > 3 || this.searchType !== null) {
+      this.authService.searchHackPosts(this.searchTopic, this.searchType).subscribe((response) => {
+        console.log(response, "<<<< all search posts");
+        this.postData = JSON.parse(JSON.stringify(response));
+      },
+        (error) => { console.log(error); });
+    }
   }
 
   Cancel(){
@@ -68,8 +107,8 @@ export class HackpostComponent {
 
   postLike(id:number){
     const postId = id
+    // this.page--;
     this.authService.postLike(postId).subscribe((response) => {
-      console.log(response, "<<<< all posts");
       this.getHackPosts();
     },
       (error) => { console.log(error); });

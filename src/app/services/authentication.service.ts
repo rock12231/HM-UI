@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import e from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,23 @@ export class AuthenticationService {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('token', access);
       localStorage.setItem('refresh', refresh);
-      const decodedToken = this.jwtHelper.decodeToken(access);
-      // set username and email to local storage
-      localStorage.setItem('username', decodedToken.username);
-      localStorage.setItem('email', decodedToken.email);
+      // const decodedToken = this.jwtHelper.decodeToken(access);
+      // // set username and email to local storage
+      // localStorage.setItem('username', decodedToken.username);
+      // localStorage.setItem('email', decodedToken.email);
       // console.log("Decoded Token : >>>>>", decodedToken);
     }
+  }
+
+  getUsername(): string | null | undefined {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        return decodedToken.username;
+      }
+    }
+    return undefined;
   }
 
   getToken(): string | null | undefined {
@@ -68,6 +80,13 @@ export class AuthenticationService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
+  createParams(): HttpParams {
+    let params = new HttpParams();
+    params = params.append('page', '1');
+    params = params.append('page_size', '10');
+    return params;
+  }
+
   logout(refreshToken: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/logout/`, { refresh: refreshToken });
   }
@@ -88,20 +107,36 @@ export class AuthenticationService {
     return this.http.put<any>(`${this.apiUrl}/profile/`, data, { headers: this.createHeaders() });
   }
 
-  getHackPosts(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/post/`, { headers: this.createHeaders() });
+  getHackPosts(page: number = 1, pageSize: number = 10): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('page_size', pageSize.toString());
+    return this.http.get<any>(`${this.apiUrl}/post/`, { headers: this.createHeaders(), params: params });
   }
 
-  postHackPosts(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/post/`, data, { headers: this.createHeaders() });
+  searchHackPosts(search: string, types: string): Observable<any> {
+    search = search.replace(/#/g, '%23');
+    search = search.replace(/@/g, '%40');
+    return this.http.get<any>(`${this.apiUrl}/post/search/?search=${search}&types=${types}`, { headers: this.createHeaders() });
+  }
+
+  postHackPosts(page: number = 1, pageSize: number = 10, data: any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('page_size', pageSize.toString());
+    return this.http.post<any>(`${this.apiUrl}/post/`, data, { headers: this.createHeaders(), params: params });
   }
 
   updateHackPosts(id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/post/${id}/`, data, { headers: this.createHeaders() });
+    return this.http.put<any>(`${this.apiUrl}/post/${id}/`, data, { headers: this.createHeaders(), params: this.createParams() });
+  }
+
+  showHackPosts(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/post/show/${id}/`, { headers: this.createHeaders() });
   }
 
   deleteHackPosts(id: number, data: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/post/${id}/`, { headers: this.createHeaders(), body: data });
+    return this.http.delete<any>(`${this.apiUrl}/post/${id}/`, { headers: this.createHeaders(), body: data,params: this.createParams()});
   }
 
   hackeathonData(): Observable<any> {
@@ -109,7 +144,9 @@ export class AuthenticationService {
   }
 
   postLike(id: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/post/like/${id}/`,{ headers: this.createHeaders() });
+    return this.http.post<any>(`${this.apiUrl}/post/like/${id}/`, {}, { headers: this.createHeaders() });
   }
+
+
 
 }
