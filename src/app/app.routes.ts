@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { AuthGuard } from './auth.guard';
 import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { HmFrameComponent } from './hm-frame/hm-frame.component';
+import { MessageComponent } from './message/message.component';
 
 export const routes: Routes = [
     // { path: '', component: HmFrameComponent }, make this component common in hackpost and profile 
@@ -31,6 +32,7 @@ export const routes: Routes = [
             // { path: 'publicprofile', loadChildren: () => import('./public-profile/public-profile.component').then(m => m.PublicProfileComponent) },
             { path: 'about', component: AboutComponent },
             // { path: 'about', loadChildren: () => import('./about/about.component').then(m => m.AboutComponent) },
+            { path: 'message', component: MessageComponent, canActivate: [AuthGuard] },
             { path: 'notfound', component: PageNotFoundComponent },
             // { path: 'notfound', loadChildren: () => import('./page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent) },
             { path: '**', redirectTo: '/notfound' },

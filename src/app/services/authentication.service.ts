@@ -49,6 +49,13 @@ export class AuthenticationService {
     return undefined;
   }
 
+  getRefreshToken(): string | null | undefined {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('refresh');
+    }
+    return undefined;
+  }
+
   clearToken(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
@@ -87,8 +94,8 @@ export class AuthenticationService {
     return params;
   }
 
-  logout(refreshToken: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/logout/`, { refresh: refreshToken });
+  logout(): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/logout/`, { refresh: this.getRefreshToken() }, { headers: this.createHeaders() });
   }
 
   register(username: string, email: string, password: string): Observable<any> {
@@ -99,12 +106,28 @@ export class AuthenticationService {
     return this.http.get<any>(`https://api.github.com/users/${gid}`);
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/forgotpassword/`, { email });
+  }
+
+  resetPassword(email: any, otp: number, new_password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/resetpassword/`, { email, otp, new_password });
+  }
+
   getProfile(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/profile/`, { headers: this.createHeaders() });
   }
 
   updateProfile(data: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/profile/`, data, { headers: this.createHeaders() });
+  }
+
+  getProfilePhoto(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/profile/photo/`, { headers: this.createHeaders() });
+  }
+
+  postProfilePhoto(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/profile/photo/`, data, { headers: this.createHeaders() });
   }
 
   getHackPosts(page: number = 1, pageSize: number = 10): Observable<any> {
@@ -136,7 +159,7 @@ export class AuthenticationService {
   }
 
   deleteHackPosts(id: number, data: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/post/${id}/`, { headers: this.createHeaders(), body: data,params: this.createParams()});
+    return this.http.delete<any>(`${this.apiUrl}/post/${id}/`, { headers: this.createHeaders(), body: data, params: this.createParams() });
   }
 
   hackeathonData(): Observable<any> {

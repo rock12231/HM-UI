@@ -4,7 +4,7 @@
     <!-- <button type="button" (click)="openPostPopup()" class="btn btn-sm btn-primary mb-3">Post</button> -->
     <div class="col-sm-12 col-xl-8">
         <div class="bg-secondary rounded h-100 p-4">
-            <h6 class="mb-3 text-center">If You Are Looking Member or Team Post Your Request With Information Here ... <button type="button" (click)="openPostPopup()" class="btn btn-sm btn-primary">New Post</button></h6>
+            <h6 class="mb-3 text-center">If You Are Looking Member/Team, Post Your Request With Information Here ... <button type="button" (click)="openPostPopup()" class="btn btn-sm btn-primary">New Post</button></h6>
             
             <!-- <div class="form-floating mb-2">
                 <input [(ngModel)]="currentPost.title" type="text" class="form-control form-control-sm" id="hacknmae" placeholder="ABCD Hackathon">
@@ -42,17 +42,9 @@
 
             <hr>
             <div class="row">
-                <div class="col-3">
-                    <input [(ngModel)]="searchTopic" (ngModelChange)="getSearchedPosts()" class="form-control form-control-sm" type="text" placeholder="Type #tag" aria-label=".form-control-sm example">
+                <div class="col-6">
+                    <input [(ngModel)]="searchTopic" (ngModelChange)="getSearchedPosts()" class="form-control form-control-sm" type="text" placeholder="Search keyword, #tag" aria-label=".form-control-sm example">
                 </div>
-                <!-- <div class="col-3">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected="">Hackathon</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div> -->
                 <div class="col-3">
                     <select  [(ngModel)]="searchType" (ngModelChange)="getSearchedPosts()" class="form-select form-select-sm" aria-label=".form-select-sm example">
                         <option ngValue="" selected="">Posts Type</option>
@@ -60,13 +52,13 @@
                         <option value="Team">Team</option>
                     </select>
                 </div>
-                <div class="col-3">
+                <div class="col-3 text-center">
                     <button type="button" (click)="clearVal()" class="btn btn-sm btn-outline-warning">Reset</button>
                 </div>
             </div>
             <hr>
             
-            <div *ngFor="let item of postData" class="card mb-3" data-aos="zoom-in">
+            <!-- <div *ngFor="let item of postData" class="card mb-3" data-aos="zoom-in">
                 <div class="card-body text-muted">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex">
@@ -91,9 +83,7 @@
                     <p class="card-text">{{item.content}}</p>
                     <div class="d-flex justify-content-between">
                         <div class="d-flex">
-                            <button (click)="postLike(item.id)" type="button" class="btn btn-sm btn-outline-primary"> <i class="fa fa-heart"> {{item.like_count}}</i>
-                                <!-- <i class="fa fa-thumbs-up"></i> -->
-                            </button>
+                            <button (click)="postLike(item.id)" type="button" class="btn btn-sm btn-outline-primary"> <i class="fa fa-heart"> {{item.like_count}}</i></button>
                             <button type="button" class="btn btn-sm ms-2 btn-outline-primary"> <i class="fa fa-comment"> {{item.comment_count}}</i></button>
                             <button type="button" (click)="openPopup(item)" class="btn btn-sm ms-2 btn-outline-primary"> <i class="fa fa-book-reader"></i></button>
                         </div>
@@ -103,7 +93,69 @@
                     </div>
                 </div>
                 <app-post-popup *ngIf="item.showPopup" [postData]="item.id" (close)="closePopup(item)"></app-post-popup>
-            </div>
+            </div> -->
+
+
+            
+                    <article *ngFor="let item of postData" [ngClass]="{'postcard': true, 'light': true, 'blue': item.types === 'Team', 'red': item.types === 'Member'}">
+                        <a class="postcard__img_link">
+                            <img class="postcard__img" src="https://picsum.photos/700/700" alt="Image Title" />
+                        </a>
+                        <div class="postcard__text t-dark">
+                            <h1 [ngClass]="{'postcard__title': true, 'blue': item.types === 'Team', 'red': item.types === 'Member'}"  (click)="openPopup(item)"><a>{{item.title|titlecase}}</a></h1>
+                            <div class="postcard__subtitle small">
+                                <time datetime="2020-05-25 12:00:00">
+                                    <i class="fas fa-calendar-alt mr-2"></i> {{item.created_at|date:'medium'}}&nbsp;&nbsp;
+                                    <i class="fas fa-user-edit"></i> {{item.updated_at|date:'medium'}}
+                                </time>
+                            </div>
+                            <div class="postcard__bar"></div>
+                            <div class="postcard__preview-txt">{{item.content|slice:0:200}}<span *ngIf="item.showFullContent">{{item.content|slice:200:2000}} </span><a (click)="toggleContent(item)"><u> {{ btnText}}</u></a></div>
+                            <ul class="postcard__tagbox">
+                                <li [ngClass]="{'tag__item':true, 'play': true, 'blue': item.types === 'Team', 'red': item.types === 'Member'}"><a (click)="postLike(item.id)"><i class="fas fa-thumbs-up mr-2"></i> {{item.like_count}}</a></li>
+                                <li [ngClass]="{'tag__item':true, 'play': true, 'blue': item.types === 'Team', 'red': item.types === 'Member'}"><i class="fas fa-comments mr-2"></i> {{item.like_count}}</li>
+                                <li [ngClass]="{'tag__item':true, 'play': true, 'blue': item.types === 'Team', 'red': item.types === 'Member'}"><a><i class="fas fa-share-square"></i></a></li>
+                                <li [ngClass]="{'tag__item':true, 'play': true, 'blue': item.types === 'Team', 'red': item.types === 'Member'}"><a><i class="fas fa-user-friends"></i> Interested</a></li>
+                                <div class="dropdown p-0 text-dark">
+                                    <button class="btn btn-sm btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-chevron-circle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li class="dropdown-item" (click)="openPostPopupData(item)"><i class="fas fa-pencil-alt"></i> Edit</li>
+                                        <li class="dropdown-item" (click)="deleteHackPosts(item.id)"><i class="fas fa-trash-alt"></i> Delete</li>
+                                    </ul>
+                                </div>
+                            </ul>
+                        </div>
+                        <app-post-popup *ngIf="item.showPopup" [postData]="item.id" (close)="closePopup(item)"></app-post-popup>
+                    </article>
+                    
+                    
+                    <!-- <article class="postcard light red">
+                        <a class="postcard__img_link" href="#">
+                            <img class="postcard__img" src="https://picsum.photos/700/700" alt="Image Title" />
+                        </a>
+                        <div class="postcard__text t-dark">
+                            <h1 class="postcard__title red"><a href="#">Podcast Title</a></h1>
+                            <div class="postcard__subtitle small">
+                                <time datetime="2020-05-25 12:00:00">
+                                    <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                                </time>
+                            </div>
+                            <div class="postcard__bar"></div>
+                            <div class="postcard__preview-txt">Lorem ipsum dolor ius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+                            <ul class="postcard__tagbox">
+                                <li class="tag__item"><i class="fas fa-tag mr-2"></i> Like</li>
+                                <li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+                                <li class="tag__item play red">
+                                    <a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </article> -->
+           
+
+
             <div class="text-center">
                 <i *ngIf="!loading" (click)="loadMore()" class="text-success">Show More</i>
                 <i *ngIf="loading" class="text-primary">No More Post</i>
@@ -113,42 +165,9 @@
     </div>
 
     <div class="col-sm-12 col-xl-4">
-        <div class="bg-secondary rounded h-100 p-4">
+        <div class="bg-secondary rounded h-100 p-3">
             <h6 class="mb-4">Updates</h6>
-            <!-- {{hData|json}} -->
-            <!-- <div *ngFor="let item of hData" class="card mb-3">
-                <div class="card-body">
-                    <h6 class="card-title text-primary">{{item.title}}</h6>
-                    <p class="card-text">Example : I am looking for a team to participate in a hackathon. I am a web developer and I have experience in React, Node.js, and MongoDB. I am looking for a team that has a designer and a backend developer. #react #nodejs #mongodb #backend #frontend #webdeveloper #designer #hackathon</p>
-                    
-                </div>
-            </div> -->
-
-            <div *ngFor="let item of hData" class="col-md-12 mb-4">
-                <div class="card">
-                    <div class="card-header bg-gradient">
-                    <h5 class="card-title text-dark">{{ item.title }}</h5>
-                    </div>
-                    <div class="card-body">
-                    <p class="card-text">{{ item.description | slice:0:60 }} ...</p>
-                    <hr>
-                    <p class="card-text m-0">
-                        <i class="far fa-calendar-alt"></i> Start Date: {{ item.start_date | date }}<br>
-                        <i class="far fa-calendar-alt"></i> End Date: {{ item.end_date | date }}
-                    </p>
-                    <p class="card-text m-0">
-                        <i class="fas fa-money-bill-wave"></i> Registration Fee: {{ item.registration_fee }}<br>
-                        <i class="fas fa-trophy"></i> Prize: {{ item.prize }}
-                    </p>
-                    </div>
-                    <div class="card-footer bg-gradient">
-                    <small class="text-muted">
-                        <i class="fas fa-link"></i> <a href="{{ item.link }}" target="_blank">More Info</a>
-                    </small>
-                    </div>
-                </div>
-                </div>
-
+            <app-hacklist></app-hacklist>
         </div>
     </div>
 

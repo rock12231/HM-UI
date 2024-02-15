@@ -1,0 +1,116 @@
+<div *ngFor="let item of hackList; let i = index" class="col-lg-12">
+    <div class="card card-margin">
+        <div class="card-header no-border">
+            <h4 class="card-title heading-with-line font-weight-bold text-primary">{{ item.title | titlecase }}</h4>
+        </div>
+        <div class="card-body pt-0">
+            <div class="widget-49">
+                <div class="widget-49-title-wrapper">
+                    <div class="card card-margin" [ngClass]="{
+                        'widget-49-date-primary': i % 3 === 0,
+                        'widget-49-date-warning': i % 3 === 1,
+                        'widget-49-date-success': i % 3 === 2}">
+                        <span class="widget-49-date-day">{{item.start_date|date:'d'}}</span>
+                        <span class="widget-49-date-month">{{item.start_date|date:'EE'}}</span>
+                    </div>
+                    <div class="widget-49-meeting-info">
+                        <span class="widget-49-pro-title">PRO-08235 DeskOpe. Website</span>
+                        <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+                    </div>
+                </div>
+                <ul class="widget-49-meeting-points">
+                    <li class="widget-49-meeting-item"><span>Expand module is removed</span></li>
+                    <li class="widget-49-meeting-item"><span>Data migration is in scope</span></li>
+                    <li class="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li>
+                </ul>
+                <div class="widget-49-meeting-action">
+                    <a href="#" class="btn btn-sm btn-flash-border-primary">View All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngFor="let item of hData" class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-gradient">
+            <h5 class="card-title text-dark">{{ item.title }}</h5>
+            </div>
+            <div class="card-body">
+            <p class="card-text">{{ item.description | slice:0:60 }} ...</p>
+            <hr>
+            <p class="card-text m-0">
+                <i class="far fa-calendar-alt"></i> Start Date: {{ item.start_date | date }}<br>
+                <i class="far fa-calendar-alt"></i> End Date: {{ item.end_date | date }}
+            </p>
+            <p class="card-text m-0">
+                <i class="fas fa-money-bill-wave"></i> Registration Fee: {{ item.registration_fee }}<br>
+                <i class="fas fa-trophy"></i> Prize: {{ item.prize }}
+            </p>
+            </div>
+            <div class="card-footer bg-gradient">
+            <small class="text-muted">
+                <i class="fas fa-link"></i> <a href="{{ item.link }}" target="_blank">More Info</a>
+            </small>
+            </div>
+        </div>
+    </div> -->
+
+<!-- <div class="col-lg-12">
+    <div class="card card-margin">
+        <div class="card-header no-border">
+            <h5 class="card-title">MOM</h5>
+        </div>
+        <div class="card-body pt-0">
+            <div class="widget-49">
+                <div class="widget-49-title-wrapper">
+                    <div class="widget-49-date-warning">
+                        <span class="widget-49-date-day">13</span>
+                        <span class="widget-49-date-month">apr</span>
+                    </div>
+                    <div class="widget-49-meeting-info">
+                        <span class="widget-49-pro-title">PRO-08235 Lexa Corp.</span>
+                        <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+                    </div>
+                </div>
+                <ol class="widget-49-meeting-points">
+                    <li class="widget-49-meeting-item"><span>Scheming module is removed</span></li>
+                    <li class="widget-49-meeting-item"><span>App design contract confirmed</span></li>
+                    <li class="widget-49-meeting-item"><span>Client request to send invoice</span></li>
+                </ol>
+                <div class="widget-49-meeting-action">
+                    <a href="#" class="btn btn-sm btn-flash-border-warning">View All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="card card-margin">
+        <div class="card-header no-border">
+            <h5 class="card-title">MOM</h5>
+        </div>
+        <div class="card-body pt-0">
+            <div class="widget-49">
+                <div class="widget-49-title-wrapper">
+                    <div class="widget-49-date-success">
+                        <span class="widget-49-date-day">22</span>
+                        <span class="widget-49-date-month">apr</span>
+                    </div>
+                    <div class="widget-49-meeting-info">
+                        <span class="widget-49-pro-title">PRO-027865 Opera module</span>
+                        <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+                    </div>
+                </div>
+                <ol class="widget-49-meeting-points">
+                    <li class="widget-49-meeting-item"><span>Scope is revised and updated</span></li>
+                    <li class="widget-49-meeting-item"><span>Time-line has been changed</span></li>
+                    <li class="widget-49-meeting-item"><span>Received approval to start wire-frame</span></li>
+                </ol>
+                <div class="widget-49-meeting-action">
+                    <a href="#" class="btn btn-sm btn-flash-border-success">View All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

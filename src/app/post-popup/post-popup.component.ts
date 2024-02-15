@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
@@ -13,13 +12,12 @@ import { SpinnerService } from '../services/spinner.service';
   styleUrl: './post-popup.component.css'
 })
 export class PostPopupComponent {
+
   @Input() postData: any;
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   token: string | null | undefined;
 
-
-  constructor(private http: HttpClient,
-    private authService: AuthenticationService,
+  constructor(private authService: AuthenticationService,
     private spinnerService: SpinnerService) {
     this.spinnerService.show();
     this.token = this.authService.getToken();
@@ -48,8 +46,5 @@ export class PostPopupComponent {
   closePopup() {
     this.close.emit();
   }
-
-
-
 
 }

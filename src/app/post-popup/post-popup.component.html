@@ -1,102 +1,188 @@
 <div class="popup-container">
 
   <div class="popup">
-    <div class="d-flex float-end m-2" (click)="closePopup()"><i class="fa fa-times"></i></div>
+    <!-- {{postData|json}} -->
+    <!-- <div class="card">
+      <div class="d-flex float-end m-2 text-muted" (click)="closePopup()"><i class="fa fa-times"></i></div>
+      <div class="card-header">
+        <img src="assets/img/user.jpg" class="rounded-circle" width="30" height="30" alt="..."> {{ postData.user }}
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2">
 
-    <!-- <div class="row mt-2"> -->
-    <!-- <div class="preview-card">
-                <div class="preview-card__wrp">
-                  <div class="preview-card__item">
-                    <div class="preview-card__img">
-                      <img src="https://res.cloudinary.com/muhammederdem/image/upload/v1535759872/kuldar-kalvik-799168-unsplash.jpg" width="" alt="">
-                    </div>
-                    <div class="preview-card__content">
-                      <span class="preview-card__code">26 December 2019</span>
-                      <div class="preview-card__title">Lorem Ipsum Dolor</div>
-                      <div class="preview-card__text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
-                      <a href="#" class="preview-card__button">READ MORE</a>
+          </div>
+          <div class="col-10">
+            <h6 class="card-title text-dark">{{ postData.title }}</h6>
+            <p class="card-text"><small class="text-muted">{{ postData.created_at | date }}</small></p>
+            <p class="card-text">{{ postData.content }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-sm btn-outline-primary mr-1"><i class="fas fa-comment"></i>
+          Comment</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary mr-1"><i class="fas fa-share"></i>
+          Share</button>
+        <button type="button" class="btn btn-sm btn-outline-success mr-1"><i class="fas fa-thumbs-up"></i>
+          Interested</button>
+        <button type="button" class="btn btn-sm btn-outline-danger mr-1"><i class="fas fa-times"></i> Close</button>
+      </div>
+    </div> -->
+
+    <!-- <div class="container">
+      <div class="d-flex float-end m-2 text-muted" (click)="closePopup()"><i class="fa fa-times"></i></div>
+      <div class="contact__wrapper shadow-lg mt-n9">
+        <div class="row no-gutters">
+          <div class="col-lg-5 contact-info__wrapper gradient-brand-color p-5 order-lg-2">
+            <h3 class="color--white mb-5">Get in Touch</h3>
+
+            <ul class="contact-info__list list-style--none position-relative z-index-101">
+              <li class="mb-4 pl-4">
+                <span class="position-absolute"><i class="fas fa-envelope"></i></span> support bootdey.com
+              </li>
+              <li class="mb-4 pl-4">
+                <span class="position-absolute"><i class="fas fa-phone"></i></span> (021)-241454-545
+              </li>
+              <li class="mb-4 pl-4">
+                <span class="position-absolute"><i class="fas fa-map-marker-alt"></i></span> bootdey Technologies Inc.
+                <br> 2694 Queen City Rainbow Drive
+                <br> Florida 99161
+
+                <div class="mt-3">
+                  <a href="https://www.google.com/maps" target="_blank"
+                    class="text-link link--right-icon text-white">Get directions <i
+                      class="link__icon fa fa-directions"></i></a>
+                </div>
+              </li>
+            </ul>
+
+            <figure class="figure position-absolute m-0 opacity-06 z-index-100" style="bottom:0; right: 10px">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="444px"
+                height="626px">
+                <defs>
+                  <linearGradient id="PSgrad_1" x1="0%" x2="81.915%" y1="57.358%" y2="0%">
+                    <stop offset="0%" stop-color="rgb(255,255,255)" stop-opacity="1"></stop>
+                    <stop offset="100%" stop-color="rgb(0,54,207)" stop-opacity="0"></stop>
+                  </linearGradient>
+
+                </defs>
+                <path fill-rule="evenodd" opacity="0.302" fill="rgb(72, 155, 248)"
+                  d="M816.210,-41.714 L968.999,111.158 L-197.210,1277.998 L-349.998,1125.127 L816.210,-41.714 Z"></path>
+                <path fill="url(#PSgrad_1)"
+                  d="M816.210,-41.714 L968.999,111.158 L-197.210,1277.998 L-349.998,1125.127 L816.210,-41.714 Z"></path>
+              </svg>
+            </figure>
+          </div>
+
+          <div class="col-lg-7 contact-form__wrapper p-5 order-lg-1">
+            <form action="#" class="contact-form form-validate" novalidate="novalidate">
+              <div class="row">
+                <div class="col-sm-6 mb-3">
+                  <div class="form-group">
+                    <label class="required-field" for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Wendy">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 mb-3">
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Appleseed">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 mb-3">
+                  <div class="form-group">
+                    <label class="required-field" for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="wendy.apple@seed.com">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 mb-3">
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="(021)-454-545">
+                  </div>
+                </div>
+
+                <div class="col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label class="required-field" for="message">How can we help?</label>
+                    <textarea class="form-control" id="message" name="message" rows="4"
+                      placeholder="Hi there, I would like to....."></textarea>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 mb-3">
+                  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div> -->
+
+      <div class="row justify-content-center">
+      <div class="float-top-left m-2 text-muted" (click)="closePopup()"><i class="fa fa-times text-dark"></i></div>
+        <div class="col-xl-12">
+          <div class="card border-0">
+            <div class="card-body p-0">
+              <div class="row no-gutters">
+                <div class="col-lg-6 d-none d-lg-inline-block">
+                  <div class="account-block rounded-right">
+                    <div class="overlay rounded-right"></div>
+                    <div class="account-testimonial">
+                      <h4 class="text-white mb-4">This beautiful theme yours!</h4>
+                      <p class="lead text-white">"Best investment i made for a long time. Can only recommend it for
+                        other
+                        users."</p>
+                      <p>- Admin User</p>
                     </div>
                   </div>
-          
                 </div>
-              </div> -->
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <div class="mb-5">
+                      <h3 class="h4 font-weight-bold text-theme">Login</h3>
+                    </div>
 
-    <!-- <div class="preview-card">
-                <div class="preview-card__wrp">
-                  <div class="preview-card__item swiper-slide">
-                    <div class="preview-card__img">
-                      <img src="https://res.cloudinary.com/muhammederdem/image/upload/v1535759872/kuldar-kalvik-799168-unsplash.jpg" alt="">
-                    </div>
-                    <div class="preview-card__content">
-                      <span class="preview-card__code">26 December 2019</span>
-                      <div class="preview-card__title">Lorem Ipsum Dolor</div>
-                      <div class="preview-card__text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
-                      <a href="#" class="preview-card__button">READ MORE</a>
-                    </div>
+                    <h6 class="h5 mb-0">Welcome back!</h6>
+                    <p class="text-muted mt-2 mb-5">Enter your email address and password to access admin panel.</p>
+
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1">
+                      </div>
+                      <div class="form-group mb-5">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                      </div>
+                      <button type="submit" class="btn btn-theme">Login</button>
+                      <a href="#l" class="forgot-link float-right text-primary">Forgot password?</a>
+                    </form>
                   </div>
-          
                 </div>
-              </div> -->
-    <!-- </div> -->
-    <!-- 
-        <div class="card mb-3">
-            <div class="card-body text-muted">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                        <img src="assets/img/user.jpg" class="rounded-circle" width="40" height="40" alt="...">
-                        <div class="ms-2">
-                            <h6 class="card-title
-                            text-dark">{{postData.user|titlecase}}</h6>
-                            <p class="card-text"><small class="text-muted">{{postData.created_at|date:'MMM d,h:mm a'}} <ng-container *ngIf="postData.created_at != postData.updated_at">[Edited : {{postData.updated_at|date:'MMM d,h:mm a'}}]</ng-container></small></p>
-                        </div>
-                    </div>
-                    <div class="dropdown dropstart">
-                        <button class="btn btn-sm btn-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots"></i>
-                        </button>
-                    </div>
-                </div>
-                <h6 class="card-title mt-1 text-primary">{{postData.title|titlecase}} <i class="text-muted">( Looking For {{postData.types}}: {{postData.member}})</i></h6>
-                <p class="card-text">{{postData.content}}</p>
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-sm btn-outline-primary"> <i class="fa fa-heart"> {{postData.like_count}}</i></button>
-                        <button type="button" class="btn btn-sm ms-2 btn-outline-primary"> <i class="fa fa-comment"> {{postData.comment_count}}</i></button>
-                   </div>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-sm btn-outline-primary"><i class="fa fa-share"></i></button>
-                    </div>
-                </div>
+              </div>
+
             </div>
-        </div> -->
-{{postData|json}}
-<div class="card">
-  <div class="card-header">
-    <img src="assets/img/user.jpg" class="rounded-circle" width="30" height="30" alt="..."> {{ postData.user }}
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-2">
+            <!-- end card-body -->
+          </div>
+          <!-- end card -->
 
-      </div>
-      <div class="col-10">
-        <h6 class="card-title text-dark">{{ postData.title }}</h6>
-        <p class="card-text"><small class="text-muted">{{ postData.created_at | date }}</small></p>
-        <p class="card-text">{{ postData.content }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <button type="button" class="btn btn-sm btn-outline-primary mr-1"><i class="fas fa-comment"></i>
-      Comment</button>
-    <button type="button" class="btn btn-sm btn-outline-secondary mr-1"><i class="fas fa-share"></i>
-      Share</button>
-    <button type="button" class="btn btn-sm btn-outline-success mr-1"><i class="fas fa-thumbs-up"></i>
-      Interested</button>
-    <button type="button" class="btn btn-sm btn-outline-danger mr-1"><i class="fas fa-times"></i> Close</button>
-  </div>
-</div>
+          <p class="text-muted text-center mt-3 mb-0">Don't have an account? <a href=""
+              class="text-primary ml-1">register</a></p>
 
+          <!-- end row -->
+
+        </div>
+        <!-- end col -->
+      </div>
 
 
 

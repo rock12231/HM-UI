@@ -10,12 +10,14 @@ import { PostPopupComponent } from '../post-popup/post-popup.component';
 import { PostOpenPopupComponent } from '../post-open-popup/post-open-popup.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { SpinnerService } from '../services/spinner.service';
+import { HacklistComponent } from '../hacklist/hacklist.component';
+import { MytoastrService } from '../services/mytoastr.service';
 
 @Component({
   selector: 'app-hackpost',
   standalone: true,
   imports: [CommonModule, FormsModule, LeftnavComponent, TopnavComponent, PostPopupComponent, PostOpenPopupComponent,
-  SpinnerComponent],
+  SpinnerComponent,HacklistComponent,],
   templateUrl: './hackpost.component.html',
   styleUrl: './hackpost.component.css'
 })
@@ -38,20 +40,31 @@ export class HackpostComponent {
   isUpdatebtn: boolean = false;
   isCancelbtn: boolean = false;
   showPostPopup: boolean = false;
-  hData: any = [];
 
   page: number = 1;
   pageSize: number = 10;
   loading: boolean = false;
   totalItems: number = 0;
 
+  showFullContent: boolean = true;
+  btnText: string = 'Read More';
+  
   constructor(private http: HttpClient, private router: Router,
      private authService: AuthenticationService,
-     private spinnerService: SpinnerService) {
+     private spinnerService: SpinnerService,
+     private toastrService: MytoastrService) {
     this.spinnerService.show();
     this.token = this.authService.getToken();
   }
 
+  // showSuccess() {
+  //   this.toastrService.showSuccess('Hello, success message!', 'Success');
+  //   console.log('Hello, success message!');
+  // }
+
+  // showError() {
+  //   this.toastrService.showError('Hello, error message!', 'Error');
+  // }
 
   ngOnInit() {
     setTimeout(() => {
@@ -59,13 +72,19 @@ export class HackpostComponent {
     }, 300);
     if (this.token) {
       this.getHackPosts();
-      this.hackathon();
     }
+  }
+
+  toggleContent(item:any): void {
+    item.showFullContent = !item.showFullContent;
+    this.btnText = item.showFullContent ? 'Read Less' : 'Read More';
+
   }
 
   clearVal() {
     this.searchTopic = '';
     this.searchType = '';
+    this.toastrService.showSuccess('Reset, success message!', 'Success');
     this.getHackPosts();
   }
 
@@ -125,14 +144,6 @@ export class HackpostComponent {
       }
     );
   }
-
- // hackathon data
- hackathon() {
-  this.authService.hackeathonData().subscribe((response) => {
-    this.hData = JSON.parse(JSON.stringify(response));
-    console.log(response, "<<<< hackathon data");
-  },);
-}
 
 // For new and edit posts emit from child component popup
 updateData() {

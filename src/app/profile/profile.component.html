@@ -6,8 +6,17 @@
     <div class="row">
         <div class="col-sm-12 col-xl-5">
             <div class="text-center">
-                <!-- <img src="data:image/png;base64,{{ profileData.avatar_data }}" alt="Avatar"> -->
-                <img class="img-fluid rounded-circle mx-auto mb-4" src="assets/img/testimonial-1.jpg" style="width: 100px; height: 100px;">
+                <!-- <img class="img-fluid rounded-circle mx-auto mb-4" src="data:image/jpg;base64,{{ profileData.photo }}" style="width: 100px; height: 100px;"> -->
+                <div class="position-relative">
+                    <img class="img-fluid rounded-circle mx-auto mb-4" src="data:image/jpg;base64,{{ photo }}" style="width: 100px; height: 100px;">
+                    <div class="position-absolute top-50 start-0 translate-middle-y">
+                      <label for="file-upload" class="btn btn-primary btn-circle" style="opacity: 0.5;">
+                        <i class="bi bi-camera"></i>
+                        <input id="file-upload" (change)="uploadPhoto($event)" accept="image/*" type="file" style="display: none;">
+                      </label>
+                    </div>
+                </div>
+                  
                 <h5 class="mb-1">{{profileData.username|titlecase}}</h5>
                 <span *ngIf="profileData.occupation == 'P' ">Professional</span>
                 <span *ngIf="profileData.occupation == 'S' ">Student</span>

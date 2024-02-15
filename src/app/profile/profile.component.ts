@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { TopnavComponent } from '../topnav/topnav.component';
 import { LeftnavComponent } from '../leftnav/leftnav.component';
 import { SpinnerService } from '../services/spinner.service';
+import { MytoastrService } from '../services/mytoastr.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +20,10 @@ export class ProfileComponent {
 
   profileData: any = [];
   token: string | null | undefined;
+  photo: any;
 
-  constructor(private http: HttpClient,
-    private router: Router,
-    private authService: AuthenticationService,
-    private spinnerService: SpinnerService
+  constructor(private authService: AuthenticationService,private spinnerService: SpinnerService,
+    private toastrService : MytoastrService
   ) {
     this.spinnerService.show();
     this.token = this.authService.getToken();
@@ -41,8 +41,20 @@ export class ProfileComponent {
   profile() {
     this.authService.getProfile().subscribe(
       (response) => {
-        console.log(response, "<<<< profile data");
-        this.profileData = JSON.parse(JSON.stringify(response));
+        this.profileData = response;
+        this.showProfilePhoto();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  
+  showProfilePhoto() {
+    this.authService.getProfilePhoto().subscribe(
+      (response) => {
+        console.log(response);
+        this.photo = response.avatar;
       },
       (error) => {
         console.log(error);
@@ -50,10 +62,29 @@ export class ProfileComponent {
     );
   }
 
+  
   updateProfile() {
     this.authService.updateProfile(this.profileData).subscribe(
       (response) => {
         console.log(response);
+        this.profile();
+        this.toastrService.showSuccess('Profile Updated', 'Success');
+      },
+      (error) => {
+        console.log(error);
+        this.toastrService.showError('Enter Name', 'Error');
+      }
+    );
+  }
+
+  uploadPhoto(event: any) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('avatar', file);
+    this.authService.postProfilePhoto(formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.toastrService.showSuccess('Profile Photo Updated', 'Success');
         this.profile();
       },
       (error) => {
@@ -61,6 +92,8 @@ export class ProfileComponent {
       }
     );
   }
+
+
 
 
 }
