@@ -10,4 +10,6 @@ import { MessagePopupComponent } from '../message-popup/message-popup.component'
 })
 export class MessageComponent {
 
+  
+
 }

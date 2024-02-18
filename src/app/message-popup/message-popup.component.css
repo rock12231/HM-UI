@@ -1,6 +1,9 @@
-body{
-    margin-top:20px;
-    background:#eee;
+
+.chat-float{
+    position: fixed;
+    right: 100px;
+    bottom: 0px;
+    z-index: 999;
 }
 .box {
     position: relative;

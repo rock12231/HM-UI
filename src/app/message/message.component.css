@@ -195,6 +195,16 @@
     border-radius: 0 3px 0 0;
 }
 
+.selected-chat {
+    width: 100%;
+    padding: 0 15px;
+    /* min-height: 64px; */
+    border-bottom: 1px solid #e6ecf3;
+    -webkit-border-radius: 0 3px 0 0;
+    -moz-border-radius: 0 3px 0 0;
+    border-radius: 0 3px 0 0;
+}
+
 .selected-user span {
     line-height: 100%;
 }
@@ -205,7 +215,9 @@
 
 .chat-container {
     position: relative;
-    padding: 1rem;
+    /* padding: 1rem; */
+    /* overflow-y: auto;
+    height: 450px; */
 }
 
 .chat-container li.chat-left,
@@ -350,6 +362,10 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    overflow: auto;
+    /* height:  */
+    height: 400px;
+    min-height: 400px;
 }
 .card {
     border: 0;
