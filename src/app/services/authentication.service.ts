@@ -10,7 +10,7 @@ import e from 'express';
 export class AuthenticationService {
   // for local development environment set apiUrl to 'http://localhost:8000/api'
 
-  private apiUrl = 'http://localhost:8000/api/user';
+  private apiUrl = 'https://hm-api-fiwd.onrender.com/api/user';
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient,) { }
